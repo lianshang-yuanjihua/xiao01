@@ -1,0 +1,80 @@
+html,
+body {
+    background-color: #efeff4;
+    height: 100%;
+    background-color: #fafafa;
+}
+
+.title {
+    margin: 20px 15px 10px;
+    color: #6d6d72;
+    font-size: 15px;
+    padding-bottom: 51px;
+}
+
+.by-card {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.mui-content>.mui-table-view:first-child {
+    margin-top: 0;
+}
+
+.by-card .mui-card-footer:before {
+    height: 0;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+    color: #f5ba4c;
+}
+
+.by-car-tab .mui-tab-item {
+    color: #6f6f6f;
+    font-weight: bold;
+}
+
+.by-car-tab .mui-tab-item.mui-active {
+    color: red;
+}
+
+.by-card-left {
+    width: 50%;
+    float: left;
+    height: 65px
+}
+
+.mui-navigate-right:after,
+.mui-push-right:after {
+    font-size: 26px;
+}
+
+.by-grezy-head {
+    width: 100vw;
+    height: 150px;
+    background-color: #f5ba4c;
+    text-align: center;
+    padding: 20px 0;
+    color: #fff;
+}
+
+.by-grzx-ye span:first-child {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.by-grzx-ye span:last-child {
+    display: inline-block;
+    margin-left: 20px
+}
+
+.by-grzx-ye span:last-child:before {
+    content: '';
+    height: 20px;
+    background-color: #ccc;
+    position: relative;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 48%;
+}

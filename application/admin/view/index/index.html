@@ -1,0 +1,27 @@
+{{extend name="public/base"}}
+{{block name="head"}}
+    {{include file="public/head"}}
+{{/block}}
+{{block name="left"}}
+    {{include file="public/left"}}
+{{/block}}
+{{block name="main"}}
+<!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <ul class="layui-tab-title">
+            <li class="home"><i class="layui-icon">&#xe68e;</i>管理首页</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src='{{:url("index/welcome")}}' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="page-content-bg"></div>
+    <!-- 右侧主体结束 -->
+{{/block}}
+{{block name="foot"}}
+    {{include file="public/foot"}}
+{{block}}

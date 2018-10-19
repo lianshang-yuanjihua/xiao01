@@ -1,0 +1,23 @@
+{{if condition="$Think.session.errorMsg"}}
+<script type="text/javascript">
+	$(function(){
+        layui.use('layer', function(){
+  var layer = layui.layer;
+  
+  layer.msg('{{$Think.session.errorMsg}}',{icon:2});
+}); 
+    })
+	</script>
+	{{:session('errorMsg',null)}}
+{{elseif condition="$Think.session.successMsg"/}}
+<script type="text/javascript">
+	$(function(){
+        layui.use('layer', function(){
+  var layer = layui.layer;
+  
+  layer.msg('{{$Think.session.successMsg}}',{icon:1});
+}); 
+    })
+</script>
+{{:session('successMsg',null)}}
+{{/if}}

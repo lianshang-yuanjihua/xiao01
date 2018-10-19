@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>源动力</title>
+		<script src="__JS__/jquery-3.3.1.min.js"></script>
+		<script src="__STATIC__/lib/mui/js/mui.min.js"></script>
+		<script src="__STATIC__/lib/mui/js/util.js"></script>
+		<link rel="stylesheet" href="__STATIC__/lib/mui/css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/lib/mui/css/icons-extra.css" />
+		
+	{{block name="css"}}{{/block}}
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background:#f5ba4c">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color:#fff"></a>
+	<h1 class="mui-title" style="color:#fff;font-weight: bold;">
+			{{block name="title"}}标题{{/block}}
+	</h1>
+	<a class=" mui-icon mui-icon-more mui-pull-right" style="color:#fff"></a>
+</header>
+	{{block name="main"}}{{/block}}
+	{{block name="foot"}}{{/block}}
+	
+		<script type="text/javascript">
+
+			(function() {
+				mui.init({
+					swipeBack: true //启用右滑关闭功能
+				});
+				var slider = mui("#slider");
+				slider.slider({
+					interval: 2000
+				});
+				
+			})();
+
+		</script>
+    <script src="__JS__/rem.js"></script>
+	{{include file="public/message"}}
+	{{block name="js"}}{{/block}}
+	
+</body>
+</html>

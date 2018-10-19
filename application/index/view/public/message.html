@@ -1,0 +1,12 @@
+{{if condition="$Think.session.errorMsg"}}
+
+<script type="text/javascript">
+	console.log('{{$Think.session.errorMsg}}');
+	</script>
+	{{:session('errorMsg',null)}}
+{{elseif condition="$Think.session.successMsg"/}}
+<script type="text/javascript">
+	console.log('{{$Think.session.successMsg}}');
+</script>
+{{:session('successMsg',null)}}
+{{/if}}

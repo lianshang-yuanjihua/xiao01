@@ -1,0 +1,27 @@
+html,
+body {
+    background-color: #efeff4;
+    height: 100%;
+    background-color: #fff;
+}
+
+.title {
+    margin: 20px 15px 10px;
+    color: #6d6d72;
+    font-size: 15px;
+    padding-bottom: 51px;
+}
+
+.by-card {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.by-card .mui-card-footer:before {
+    height: 0;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+    color: #f5ba4c;
+}

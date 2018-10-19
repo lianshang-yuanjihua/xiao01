@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.block {
+    display: inline-block;
+}
+
+/*css重置完毕*/
+
+#header {
+    text-align: center;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    width: 100%;
+    background-color: #f5ba4c;
+    color: #fff;
+}
+
+#header a {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    color: #fff;
+
+}
+
+#header span {
+    font-size: 1.8rem;
+    width: 10%;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    margin: auto 0;
+}
+
+.head_left {
+    float: left;
+    margin-top: 10px;
+    margin-left: 1rem;
+}
+
+.head_right {
+    float: right;
+    margin-right: 1rem;
+}
+
+/*头部*/
+.container {
+    width: 100%;
+    height: 37rem;
+}
+
+#by_form {
+    margin: auto 0;
+    padding: 0 1rem;
+    position: relative;
+}
+
+#by_form div {
+    border-bottom: .1rem solid #ccc;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    padding: .5rem 1.5rem;
+}
+
+/* #by_form div label img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: -.6rem;
+} */
+#by_form div input {
+    width: 60%;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    border: none;
+    margin-left: 1rem;
+    padding-left: .5rem;
+    font-size: 1.6rem;
+}
+
+.by_submit {
+    width: 80%;
+    height: 3.6rem;
+    border-radius: 1.8rem;
+    background-color: #f5ba4c;
+    border: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    top: 15rem;
+}
+
+#zmm {
+    top: 20rem;
+}
