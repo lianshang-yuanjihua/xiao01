@@ -23,7 +23,7 @@
       <xblock>
        <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button> -->
-        <span class="x-right" style="line-height:40px">共有数据：{{$userlist['userCount']}} 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：{{$delusers['userCount']}} 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -40,7 +40,7 @@
             <th>操作</th></tr>
         </thead>
         <tbody>
-          {{volist name="userlist['userlist']" id="user"}}
+          {{volist name="delusers['userlist']" id="user"}}
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{$user["id"]}}'><i class="layui-icon">&#xe605;</i></div>
@@ -66,7 +66,7 @@
         </tbody>
       </table>
       <div class="page">
-        {{$userlist['userlist']->render()}}
+        {{$delusers['userlist']->render()}}
       </div>
     </div>
     <script>

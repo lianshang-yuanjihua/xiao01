@@ -13,7 +13,7 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" action="{{:url('user/search')}}">
+        <form class="layui-form layui-col-md12 x-so" action="{{:url('product/search')}}">
           <input class="layui-input" disabled placeholder="开始日" name="start" id="start">
           <input class="layui-input" disabled placeholder="截止日" name="end" id="end">
           <input type="text" name="keywords"  placeholder="请输入用户名" value="{{$keywords ?: ''}}" autocomplete="off" class="layui-input">
@@ -21,9 +21,9 @@
         </form>
       </div>
       <xblock>
-       <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button> -->
-        <span class="x-right" style="line-height:40px">共有数据：{{$userlist['userCount']}} 条</span>
+       <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
+        <button class="layui-btn" onclick="x_admin_show('添加产品','{{:url('product/add')}}',600,400)"><i class="layui-icon"></i>添加</button> 
+        <span class="x-right" style="line-height:40px">共有数据：{{$productlist['procount']}} 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -32,32 +32,39 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>昵称</th>
-            <th>性别</th>
-            <th>手机</th>
-            <th>创建时间</th>
-            <th>状态</th>
+            <th>产品名称</th>
+            <th>产品价格</th>
+            <th>库存数量</th>
+            <th>已售数量</th>
+            <th>产品型号</th>
+            <th>产品描述</th>
+            <th>状态</th> 
             <th>操作</th></tr>
         </thead>
         <tbody>
-          {{volist name="userlist['userlist']" id="user"}}
+          {{volist name="productlist['prolist']" id="pro"}}
           <tr>
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{$user["id"]}}'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{$pro["id"]}}'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>{{$user['id']}}</td>
-            <td>{{$user.nickname}}</td>
-            <td>{{$user.sex ? '男':'女'}}</td>
-            <td>{{$user.mobile}}</td>
-            <td>{{$user.createtime}}</td>
+            <td>{{$pro['id']}}</td>
+            <td>{{$pro.title}}</td>
+            <td>{{$pro.price}}</td>
+            <td>{{$pro.num}}</td>
+            <td>{{$pro.sellnum}}</td>
+            <td>{{$pro.style}}</td>
+            <td>{{$pro.content}}</td>
             <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini">正常</span>
+              <span class="layui-btn layui-btn-normal layui-btn-mini">{{$pro.status?"正常":"已下架"}}</span>
             </td>
             <td class="td-manage">
-              <a title="查看"  onclick="x_admin_show('查看','order-view.html')" href="javascript:;">
+              <a title="查看"  onclick="x_admin_show('查看','{{:url('product/show')}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'{{$user['id']}}')" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','{{:url('product/edit')}}')" href="javascript:;">
+                <i class="layui-icon-edit">&#xe642;</i>
+              </a>
+              <a title="删除" onclick="member_del(this,'{{$pro['id']}}')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -66,7 +73,7 @@
         </tbody>
       </table>
       <div class="page">
-        {{$userlist['userlist']->render()}}
+        {{$productlist['prolist']->render()}}
       </div>
     </div>
     <script>
@@ -91,7 +98,7 @@
           layer.confirm('确认要删除吗？',function(){
             $.ajax({
               type:'post',
-              url:"{{:url('user/del')}}",
+              url:"{{:url('product/del')}}",
               data:{'id':id},
               success:function (res){
                if(res>0){
@@ -107,18 +114,6 @@
           });
       }
 
-
-
-      function delAll (argument) {
-
-        var data = tableCheck.getData();
-  
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
 
 
     </script>

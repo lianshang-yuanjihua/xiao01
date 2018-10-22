@@ -1,14 +1,16 @@
 <?php
-
 namespace app\admin\controller;
 use app\common\controller\AdminBase;
 use think\Validate;
 
 class User extends AdminBase {
 
+    //返回登录页面
     public function login() {
         return $this->fetch();
     }
+
+    //执行登录检测
     public function doLogin() {
         $data  = input('post.');
         $rules = [
@@ -34,16 +36,63 @@ class User extends AdminBase {
             $this->redirect('user/login');
         }
     }
-
+    //退出登录
     public function logout() {
         session('adminInfo', null);
         session('successMsg', '退出成功!');
         $this->redirect('user/login');
     }
-
+    //用户列表
     public function userlist() {
         $userlist = model('user')->getUserlist();
         $this->assign('userlist', $userlist);
         return $this->fetch();
     }
+    public function edit() {
+
+    }
+
+    //后台删除用户
+    public function del() {
+        $userid = input('post.id');
+        return model('user')->delUserByID($userid);
+    }
+    //后台查找用户
+    public function search() {
+        $search = input('param.keywords');
+        $type   = input('param.del');
+        $users  = [];
+        if (!$type) {
+            $users['userlist'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+                ->where('usertype', 'neq', 3)
+                ->where('usertype', 'lt', 8)
+                ->paginate(5, false, ['query' => request()->param()])->each(function ($value, $key) use ($search) {
+                $value->nickname = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->nickname);
+            });
+            $users['userCount'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+                ->where('usertype', 'lt', 8)
+                ->where('usertype', 'neq', 3)
+                ->count();
+        } else {
+            $users['userlist'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+                ->where('usertype', 'eq', 3)
+                ->paginate(5, false, ['query' => request()->param()])->each(function ($value, $key) use ($search) {
+                $value->nickname = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->nickname);
+            });
+            $users['userCount'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+                ->where('usertype', 'eq', 3)
+                ->count();
+        }
+
+        $this->assign('keywords', $search);
+        $this->assign('userlist', $users);
+        return $this->fetch('userlist');
+    }
+
+    public function delusers() {
+        $users = model('user')->getDelusers();
+        $this->assign('delusers', $users);
+        return $this->fetch();
+    }
+
 }
