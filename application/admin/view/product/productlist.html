@@ -36,7 +36,6 @@
             <th>产品价格</th>
             <th>库存数量</th>
             <th>已售数量</th>
-            <th>产品型号</th>
             <th>产品描述</th>
             <th>状态</th> 
             <th>操作</th></tr>
@@ -52,17 +51,16 @@
             <td>{{$pro.price}}</td>
             <td>{{$pro.num}}</td>
             <td>{{$pro.sellnum}}</td>
-            <td>{{$pro.style}}</td>
             <td>{{$pro.content}}</td>
             <td class="td-status">
               <span class="layui-btn layui-btn-normal layui-btn-mini">{{$pro.status?"正常":"已下架"}}</span>
             </td>
             <td class="td-manage">
-              <a title="查看"  onclick="x_admin_show('查看','{{:url('product/show')}}')" href="javascript:;">
+              <a title="查看"  onclick="x_admin_show('查看','{{:url('product/show',['id'=>$pro['id']])}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','{{:url('product/edit')}}')" href="javascript:;">
-                <i class="layui-icon-edit">&#xe642;</i>
+              <a title="编辑"  onclick="x_admin_show('编辑','{{:url('product/edit',['id'=>$pro['id']])}}')" href="javascript:;">
+                <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'{{$pro['id']}}')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>

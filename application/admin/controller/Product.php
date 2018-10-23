@@ -22,11 +22,32 @@ class Product extends AdminBase {
         return $this->fetch();
     }
 
+    public function show() {
+        $id      = input('param.id');
+        $product = model('product')->getProduct($id);
+        if ($product) {
+            $this->assign('product', $product);
+            return $this->fetch();
+        } else {
+            session('errorMsg', '获取产品信息失败');
+            $this->redirect('product/productlist');
+        }
+
+    }
+
     public function add() {
         return $this->fetch();
     }
 
     public function doAdd() {
-
+        $data       = input('post.');
+        $id         = model('product')->insertGetId($data);
+        $data['id'] = $id;
+        session('successMsg', '添加成功!请添加产品图片!');
+        $this->assign([
+            'data' => $data,
+        ]);
+        return $this->fetch('productimg/proimg');
     }
+
 }

@@ -36,6 +36,8 @@ insert into sq_user(`mobile`,`password`,`nickname`,`createtime`)values(153456789
 (15445678901,'e10adc3949ba59abbe56e057f20f883e','14Boy',unix_timestamp()),
 (15545678901,'e10adc3949ba59abbe56e057f20f883e','15Boy',unix_timestamp());
 
+drop table sq_product;
+
 create table if not exists `sq_product` (
 `id` int unsigned not null primary key auto_increment comment '主键',
 `title` varchar(255) not null comment '产品名称',
@@ -43,7 +45,6 @@ create table if not exists `sq_product` (
 `num` int(11) default 0 comment '库存数量',
 `sellnum` int(11) default 0 comment '销售数量',
 `content` text comment '产品描述简介',
-`style` text comment '产品型号参数',
 `status` tinyint(1) default 1 comment '产品状态'
 ) engine=innodb default charset utf8 comment="产品表";
 
@@ -52,6 +53,7 @@ insert into sq_product(title,price,num,content)values('源动力',670,500,'产�
 create table if not exists `sq_productimg`(
 `id` int unsigned not null primary key auto_increment comment '主键',
 `path` varchar(255) comment '图片路径及名称',
+`type` tinyint default 0 comment '图片类型',
 `productid` int(11) comment '对应产品主键ID'
 ) engine=innodb default charset utf8 comment="产品图片表";
 

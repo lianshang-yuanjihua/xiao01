@@ -1,0 +1,42 @@
+{{extend name="public/base"}}
+{{block name="main"}}
+<div class="x-nav">
+    </div>
+<div class="x-body">
+  <form class="layui-form" action="{{:url('productimg/doUpload')}}" method="post" enctype="multipart/form-data">
+
+    <div class="layui-form-item"> 
+      <label class="layui-form-label">产品 :</label>
+      <div class="layui-input-inline">
+        <input type="text" disabled lay-verify="required" placeholder="{{$data.title}}" style="border: none;" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux">产品名称</div>
+    </div>
+    <input type="hidden" name="productid" value="{{$data.id}}">
+    
+    <div class="layui-form-item"> 
+      <label class="layui-form-label">购物车内图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" name="path-0">
+      </div>
+    </div>
+
+    <div class="layui-form-item"> 
+      <label class="layui-form-label">轮播图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" multiple name="path-1[]">
+      </div>
+      <div class="layui-form-mid layui-word-aux">可按住ctrl选择多张</div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" type="submit">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </form>
+</div>
+{{/block}}
+
+

@@ -11,13 +11,7 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
 <div class="x-body">
-  <form class="layui-form" action="{{:url('product/add')}}">
-    <!-- <div class="layui-form-item">
-      <label class="layui-form-label">输入框</label>
-      <div class="layui-input-block">
-        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-      </div>
-    </div> -->
+  <form class="layui-form" action="{{:url('product/doAdd')}}" method="post" enctype="multipart/form-data">
 
     <div class="layui-form-item">
       <label class="layui-form-label">产品名称</label>
@@ -26,6 +20,8 @@
       </div>
       <div class="layui-form-mid layui-word-aux">产品名称</div>
     </div>
+
+
 
     <div class="layui-form-item">
       <label class="layui-form-label">产品价格</label>
@@ -43,6 +39,7 @@
       <div class="layui-form-mid layui-word-aux">产品库存</div>
     </div>
 
+
      <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">产品简介</label>
     <div class="layui-input-block">
@@ -54,13 +51,14 @@
     <div class="layui-form-item">
       <label class="layui-form-label">产品状态</label>
       <div class="layui-input-block">
-        <select name="style" lay-verify="required">
+        <select name="status" lay-verify="required">
           <option value=""></option>
           <option value="0">下架</option>
           <option value="1">上架</option>
         </select>
       </div>
     </div>
+
     <div class="layui-form-item">
       <div class="layui-input-block">
         <button class="layui-btn" type="submit">立即提交</button>
@@ -70,3 +68,5 @@
   </form>
 </div>
 {{/block}}
+
+
