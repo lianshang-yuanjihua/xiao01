@@ -1,38 +1,6 @@
 {{extend name="public/base"}}
 {{block name="main"}}
-  <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">产品名称：</label>
-            <div class="layui-input-block">
-                <input autocomplete="off" placeholder="{{$product.title}}" class="layui-input" readonly="" style="border:none;">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">产品价格：</label>
-            <div class="layui-input-block">
-                <input autocomplete="off" placeholder="{{$product.price}}" class="layui-input" readonly="" style="border:none;">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">库存数量：</label>
-            <div class="layui-input-block">
-                <input autocomplete="off" placeholder="{{$product.num}}" class="layui-input" readonly="" style="border:none;">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">产品状态：</label>
-            <div class="layui-input-block">
-                <input autocomplete="off" placeholder="{{$product.status?'已上架':'已下架'}}" class="layui-input" readonly="" style="border:none;">
-            </div>
-        </div>
-        <div class="layui-form-item layui-form-text"> 
-            <label class="layui-form-label">产品描述：</label>
-            <div class="layui-input-block">
-                <textarea placeholder="{{$product.content}}" class="layui-textarea" style="border:none;"></textarea>
-            </div>
-        </div>
-        
-    </form>
+  
 
 {{/block}}
 
