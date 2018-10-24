@@ -25,7 +25,7 @@ class User extends IndexBase {
     public function doLogin() {
         $data  = input('post.');
         $rules = [
-            'mobile|手机号'  => ['require', 'regex' => '/^1(3\d|4[57]|5[0-37-9]|66|7[367]|8[0235-9]|99)\d{8}$/', 'token', 'unique:user'],
+            'mobile|手机号'  => ['require', 'token'],
             'password|密码' => 'require|length:6,100',
         ];
         $validate = new Validate($rules);
@@ -34,18 +34,28 @@ class User extends IndexBase {
             if ($userInfo) {
                 session("userInfo", $userInfo);
             }
+        } else {
+            session('errorMsg', $validate->getError());
+            $this->redirect('user/login');
+            return;
         }
 
         if (session('userInfo')) {
             session('successMsg', '登录成功!');
             $this->redirect('index/index');
+            return;
         } else {
             session('errorMsg', '账号或者密码错误!');
             $this->redirect('user/login');
+            return;
         }
     }
 
     public function register() {
+        $pid = input('param.pid');
+        if ($pid) {
+            $this->assign('pid', $pid);
+        }
         return $this->fetch();
     }
 
@@ -79,5 +89,9 @@ class User extends IndexBase {
         session('userInfo', null);
         session('successMsg', '退出成功!');
         $this->redirect('index/index');
+    }
+
+    public function edit() {
+        return $this->fetch();
     }
 }

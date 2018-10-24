@@ -1,71 +1,68 @@
 {{extend name="public/base"/}}
 {{block name="title"}}
-<div class="mui-input-row "  style="width:60vw;height:35px;margin:0 auto" >
-			<input type="search" class="mui-input-clear"placeholder="">
-		</div>
+源动力
 {{/block}}
 {{block name="css"}}
 	<link rel="stylesheet" type="text/css" href="__CSS__/index.css">
 {{/block}}
 {{block name="main"}}
 {{include file="public/nav"}}
-<div class="mui-content">
+<div class="mui-content" style="padding-bottom: 0">
 			<div id="slider" class="mui-slider" style="height:150px">
+
 				<div class="mui-slider-group mui-slider-loop">
-					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					{{volist name="product->getImg" id="src"}}
+					{{if $i eq count($product->getImg)}}
+					<!-- 额外增加的第一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img src="__STATIC__/images/1.png"/>
-					</div>
-					<!-- 第一张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="__STATIC__/images/1.png" >
+						<a href="javascript:void(0)">
+							<img src="__STATIC__/upload/{{$src.path}}" />
 						</a>
 					</div>
-					<!-- 第二张 -->
+					{{/if}}
+					{{/volist}}
+					{{volist name="product->getImg" id="src"}}
+					{{if $i gt 1}}
+					<!-- 第{{$i-1}}张 -->
 					<div class="mui-slider-item">
-						<a href="#">
-							<img src="__STATIC__/images/1.png" >
+						<a href="javascript:void(0)">
+							<img src="__STATIC__/upload/{{$src.path}}">
 						</a>
 					</div>
-					<!-- 第三张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="__STATIC__/images/1.png" >
-						</a>
-					</div>
-					<!-- 第四张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="__STATIC__/images/1.png" >
-						</a>
-					</div>
-					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					{{/if}}
+					{{/volist}}
+					{{volist name="product->getImg" id="src"}}
+					{{if $i eq 2}}
+					<!-- 额外增加的最后一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img src="__STATIC__/images/1.png" >
+						<a href="javascript:void(0)">
+							<img src="__STATIC__/upload/{{$src.path}}">
 						</a>
 					</div>
+					{{/if}}
+					{{/volist}}
 				</div>
 				<div class="mui-slider-indicator">
-					<div class="mui-indicator mui-active"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
+					{{volist name="$product->getImg" id="img" key="j"}}
+					{{if $j gt 1}}
+					<div class="mui-indicator {{$j == 2?'mui-active':''}}"></div>
+					{{/if}}
+					{{/volist}}
 				</div>
 			</div>
 			<div class="mui-card by-card" style="box-shadow: none;">
-				<div class=" mui-card-media" style="height:65vw;background-image:url(__STATIC__/images/yp.png)"></div>
+				<div class=" mui-card-media" style="height:65vw;">
+					<img src="__STATIC__/upload/{{$product->getImg[0]->path}}" style="height: 100%">
+				</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner" style="padding:0 5px;">
-						<p><h3  style="text-align: center;">人参萃取精华丸</h3></p>
-						<p style="color: #9b9b9b;padding:0 10px;">详情：人参萃取精华丸，中成药名，药食同源，连续服用，本品3个月，活化肾脏.精满.气足.神旺...</p>
+						<p><h3  style="text-align: center;">{{$product.title}}</h3></p>
+						<p style="color: #9b9b9b;padding:0 10px;">详情：{{$product.content|mb_substr=0,42}} ...</p>
 					</div>
 				</div>
 				<div class="mui-card-footer">
-					<a class="mui-card-link"><span style="color:#727272">零售价：<text style="color:red">650  元 / 盒</text></span></a>
-					<a class="mui-card-link"><span style="width:160px;height:40px;line-height:40px;border-radius: 15px;background-color:#f5ba4c;color:#fff;text-align: center;font-size: 16px;">点击了解详情</span></a>
+					<span style="color:#727272;font-weight: bold;">零售价：<text style="color:red">{{$product.price}}  元 / 盒</text></span>
+					<a class="mui-card-link" href="{{:url('product/detail',['id'=>$product.id])}}"><span style="width:160px;font-weight:bold;height:40px;line-height:40px;border-radius: 15px;background-color:#f5ba4c;color:#fff;text-align: center;font-size: 16px;">点击了解详情</span></a>
 				</div>
 			</div>
 		</div>

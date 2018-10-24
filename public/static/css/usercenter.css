@@ -55,7 +55,7 @@ body {
     height: 150px;
     background-color: #f5ba4c;
     text-align: center;
-    padding: 20px 0;
+    padding: 10px 0;
     color: #fff;
 }
 
@@ -77,4 +77,10 @@ body {
     border: 1px solid #fff;
     position: absolute;
     left: 48%;
+}
+
+.by-bage {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }

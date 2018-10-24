@@ -25,3 +25,11 @@ body {
 .mui-bar-tab .mui-tab-item.mui-active {
     color: #f5ba4c;
 }
+
+.by-search {
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    -webkit-transform: translateX(50%);
+
+}

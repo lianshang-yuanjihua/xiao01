@@ -14,6 +14,7 @@ create table if not exists `sq_user`(
 `password` varchar(255) not null comment '密码',
 `paypwd` varchar(255) comment '支付密码',
 `nickname` varchar(255) not null comment '昵称',
+`icon` varchar(255),
 `sex` tinyint(1) default 1 comment '性别',
 `cloudwh` double(15,3) not null default 0 comment '云仓余额',
 `balance` double(15,3) not null default 0 comment '用户余额',
@@ -24,7 +25,7 @@ create table if not exists `sq_user`(
 `createtime` int unsigned comment '用户创建时间'
 )char set utf8 engine InnoDB comment '用户表';
 
-insert into sq_user(`mobile`,`password`,`nickname`,`createtime`)values(12345678911,'e10adc3949ba59abbe56e057f20f883e','Door',unix_timestamp());
+insert into sq_user(`mobile`,`password`,`nickname`,`createtime`)values(12345678901,'e10adc3949ba59abbe56e057f20f883e','Door',unix_timestamp());
 insert into sq_user(`mobile`,`password`,`nickname`,`createtime`,`usertype`)values(13345678901,'e10adc3949ba59abbe56e057f20f883e','NextDoor',unix_timestamp(),9);
 insert into sq_user(`mobile`,`password`,`nickname`,`createtime`,`usertype`)values(14345678901,'e10adc3949ba59abbe56e057f20f883e','8Boy',unix_timestamp(),8);
 
@@ -36,7 +37,6 @@ insert into sq_user(`mobile`,`password`,`nickname`,`createtime`)values(153456789
 (15445678901,'e10adc3949ba59abbe56e057f20f883e','14Boy',unix_timestamp()),
 (15545678901,'e10adc3949ba59abbe56e057f20f883e','15Boy',unix_timestamp());
 
-drop table sq_product;
 
 create table if not exists `sq_product` (
 `id` int unsigned not null primary key auto_increment comment '主键',
@@ -49,6 +49,9 @@ create table if not exists `sq_product` (
 ) engine=innodb default charset utf8 comment="产品表";
 
 insert into sq_product(title,price,num,content)values('源动力',670,500,'产品说明');
+
+
+select * from sq_productimg;
 
 create table if not exists `sq_productimg`(
 `id` int unsigned not null primary key auto_increment comment '主键',
@@ -74,27 +77,17 @@ create table `sq_address`(
 `best_time` varchar(50),
 `userid` int,
 `status` tinyint(1) default 0
-);
-
-create table `sq_orders`(
-`id` int key auto_increment,              
-`addressid`  int,
-`allmoney`  varchar(20),
-`userid`  int,
-`ip`  int unsigned,
-`createtime`   int,
-`status`  tinyint default 0
-);
+)char set utf8 engine InnoDB comment '地址表';
 
 
-create table `sq_orderdetail`(
+create table `sq_order`(
 `id` int key auto_increment,
 `productid`  int,
 `endprice`  varchar(20),
 `buynum`   int,
 `money`   varchar(20),
 `orderid` int
-);
+)char set utf8 engine InnoDB comment '订单表';
 
 create table if not exists `sq_yclog`(
 `id` int key auto_increment comment '主键',

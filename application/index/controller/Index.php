@@ -5,6 +5,8 @@ use app\common\controller\IndexBase;
 class Index extends IndexBase {
 
     public function index() {
+        $data = model('product')->getProduct();
+        $this->assign('product', $data);
         return $this->fetch();
     }
 
