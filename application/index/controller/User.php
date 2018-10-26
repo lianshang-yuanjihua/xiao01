@@ -14,7 +14,11 @@ class User extends IndexBase {
         return $this->fetch();
     }
 
+    //用户购物车
     public function cart() {
+        $id    = session('userInfo.id');
+        $carts = model('cart')->where('userid', $id)->select();
+        $this->assign('carts', $carts);
         return $this->fetch();
     }
 
@@ -84,14 +88,22 @@ class User extends IndexBase {
             $this->redirect('user/register');
         }
     }
-
+    //退出账号
     public function logout() {
         session('userInfo', null);
         session('successMsg', '退出成功!');
         $this->redirect('index/index');
     }
-
+    //设置页面
     public function edit() {
+        return $this->fetch();
+    }
+    //地址列表
+    public function addrlist() {
+        return $this->fetch();
+    }
+    //新增地址
+    public function newaddr() {
         return $this->fetch();
     }
 }

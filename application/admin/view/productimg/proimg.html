@@ -15,20 +15,35 @@
     <input type="hidden" name="productid" value="{{$data.id}}">
     
     <div class="layui-form-item"> 
-      <label class="layui-form-label">购物车内图片 :</label>
+      <label class="layui-form-label">购物车图片 :</label>
       <div class="layui-input-inline">
-        <input type="file" name="path-0">
+        <input type="file" class="imgfile" required name="path-0">
       </div>
     </div>
 
     <div class="layui-form-item"> 
       <label class="layui-form-label">轮播图片 :</label>
       <div class="layui-input-inline">
-        <input type="file" multiple name="path-1[]">
+        <input type="file" class="imgfile" required multiple name="path-1[]">
       </div>
       <div class="layui-form-mid layui-word-aux">可按住ctrl选择多张</div>
     </div>
 
+     <div class="layui-form-item"> 
+      <label class="layui-form-label">商品主图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" required name="path-2">
+      </div>
+    </div>
+    
+     <div class="layui-form-item"> 
+      <label class="layui-form-label">商品详情图 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" required multiple name="path-3[]">
+      </div>
+      <div class="layui-form-mid layui-word-aux">可按住ctrl选择多张</div>
+    </div>
+  
     <div class="layui-form-item">
       <div class="layui-input-block">
         <button class="layui-btn" type="submit">立即提交</button>
@@ -37,6 +52,26 @@
     </div>
   </form>
 </div>
+
 {{/block}}
-
-
+{{block name="js"}}
+<script type="text/javascript">
+  $(function(){
+    $('.imgfile').each(function(index,value){
+      $(value).change(function(){
+        var that = this;
+        $(this.files).each(function(i,v){
+          $(that).siblings().remove();
+          var img = $("<img class='showimg'/>");
+          var reader = new FileReader();
+           reader.onload = function (e) {
+                     img.attr('src',e.target.result); 
+                     img.insertAfter(that);
+                 }
+                 reader.readAsDataURL(v);
+        })
+      })
+    })
+  })
+</script>
+{{/block}}

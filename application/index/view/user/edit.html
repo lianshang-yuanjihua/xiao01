@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="mui-table-view-cell mui-media">
-                    <a class="mui-navigate-right"  href="{{:url('user/editaddr')}}">
+                    <a class="mui-navigate-right"  href="{{:url('user/addrlist')}}">
                         <div class="mui-media-body">
                             收货地址
 
@@ -51,22 +51,13 @@
 
                         <div class="mui-media-body">
                             支付密码
-                            <span class="mui-pull-right">{{$Think.session.userInfo.paypwd?'已设置':'未设置'}}</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="mui-table-view-cell mui-media">
-                    <a class="mui-navigate-right">
-
-                        <div class="mui-media-body">
-                            注销账号
+                            <span class="mui-pull-right">{{$Think.session.userInfo.paypwd?'修改':'未设置'}}</span>
                         </div>
                     </a>
                 </li>
             </ul>
             <div class="by-tjdz-bottom">
-                <a href="javascript:;">退出当前账户</a>
+                <a href="{{:url('user/logout')}}">退出当前账户</a>
             </div>
         </div>
-{{include file="public/nav"}}
 {{/block}}

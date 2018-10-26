@@ -27,4 +27,12 @@ class User extends Model {
     public function clientNum($id) {
         return $this->where('pid', $id)->count();
     }
+
+    public function getAddr() {
+        return $this->hasMany('address', 'userid');
+    }
+
+    public function getCart() {
+        return $this->hasMany('cart', 'userid');
+    }
 }

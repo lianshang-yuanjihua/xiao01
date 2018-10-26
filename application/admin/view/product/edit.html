@@ -1,7 +1,213 @@
 {{extend name="public/base"}}
 {{block name="main"}}
   
+<div class="x-nav">
+      <!-- <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span> -->
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+<div class="x-body">
+  <form class="layui-form" action="{{:url('product/doEdit',['id'=>$product.id])}}" method="post" enctype="multipart/form-data">
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品名称</label>
+      <div class="layui-input-inline">
+        <input type="text" name="title" required lay-verify="required" value="{{$product.title}}" autocomplete="off" class="layui-input"> 
+      </div>
+      <div class="layui-form-mid layui-word-aux">产品名称</div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品价格</label>
+      <div class="layui-input-inline">
+        <input type="text" name="price" required lay-verify="required" value="{{$product.price}}" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux">产品价格</div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品库存</label>
+      <div class="layui-input-inline">
+        <input type="text" name="num" required lay-verify="required" value="{{$product.num}}" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux">产品库存</div>
+    </div>
 
+     <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">产品简介</label>
+    <div class="layui-input-block">
+      <textarea name="content" placeholder="请输入内容" class="layui-textarea">{{$product.content}}</textarea>
+    </div>
+  </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品状态</label>
+      <div class="layui-input-block">
+        <select name="status" lay-verify="required">
+          <option value=""></option>
+          <option {{$product.status==0 ? 'selected':''}} value="0">下架</option>
+          <option {{$product.status==1 ? 'selected':''}} value="1">上架</option>
+          <option {{$product.status==2 ? 'selected':''}} value="2">首页推荐</option>
+        </select>
+      </div>
+    </div>
+	
+	<div class="layui-form-item">
+    	<label class="layui-form-label">购物车图片:</label>
+    	<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    		<div class="layui-upload-list">
+				{{if isset($imgs['cartimg'])}}
+    			<div style="width: 200px;text-align: center;display: inline-block" id="im_{{$imgs['cartimg']->id}}" >
+    			<img src="__STATIC__/upload/{{$imgs['cartimg']->path}}">
+    			<a href="javascript:;" onclick="delImg({{$imgs['cartimg']->id}});" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe640;</i>删除</a>
+    			</div>
+				{{/if}}
+    		</div>
+ 		</blockquote>
+    </div>
+
+    <div class="layui-form-item">
+    	<label class="layui-form-label">轮播图片:</label>
+    	<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    		<div class="layui-upload-list">
+				{{if isset($imgs['slideimg'])}}
+				{{volist name="imgs['slideimg']" id="si"}}
+    			<div style="width: 200px;text-align: center;display: inline-block" id="im_{{$si->id}}" >
+    			<img src="__STATIC__/upload/{{$si->path}}">
+    			<a href="javascript:;" onclick="delImg({{$si->id}});" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe640;</i>删除</a>
+    			</div>
+				{{/volist}}
+				{{/if}}
+    		</div>
+ 		</blockquote>
+    </div>
+
+    <div class="layui-form-item">
+    	<label class="layui-form-label">商品展示图:</label>
+    	<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    		<div class="layui-upload-list">
+    			{{if isset($imgs['showimg'])}}
+    			<div style="width: 200px;text-align: center;display: inline-block" id="im_{{$imgs['showimg']->id}}" >
+    			<img src="__STATIC__/upload/{{$imgs['showimg']->path}}">
+    			<a href="javascript:;" onclick="delImg({{$imgs['showimg']->id}});" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe640;</i>删除</a>
+    			</div>
+    			{{/if}}
+    		</div>
+ 		</blockquote>
+    </div>
+
+    <div class="layui-form-item">
+    	<label class="layui-form-label">轮播图片:</label>
+    	<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    		<div class="layui-upload-list">
+				{{if isset($imgs['detailimg'])}}
+				{{volist name="imgs['detailimg']" id="det"}}
+    			<div style="width: 200px;text-align: center;display: inline-block" id="im_{{$det->id}}" >
+    			<img src="__STATIC__/upload/{{$det->path}}">
+    			<a href="javascript:;" onclick="delImg({{$det->id}});" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe640;</i>删除</a>
+    			</div>
+				{{/volist}}
+				{{/if}}
+    		</div>
+ 		</blockquote>
+    </div>
+	
+    <div class="layui-form-item">
+    	<label class="layui-form-label"></label>
+    	 <button class="layui-btn layui-btn-small" type="button" onclick="upshow()">上传图片</button>
+    </div>
+   
+	<div class="uploadimg" style="display: none">
+	<div class="layui-form-item"> 
+      <label class="layui-form-label">购物车图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" name="path-0">
+      </div>
+    </div>
+
+    <div class="layui-form-item"> 
+      <label class="layui-form-label">轮播图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" multiple name="path-1[]">
+      </div>
+      <div class="layui-form-mid layui-word-aux">可按住ctrl选择多张</div>
+    </div>
+
+     <div class="layui-form-item"> 
+      <label class="layui-form-label">商品主图片 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" name="path-2">
+      </div>
+    </div>
+    
+     <div class="layui-form-item"> 
+      <label class="layui-form-label">商品详情图 :</label>
+      <div class="layui-input-inline">
+        <input type="file" class="imgfile" multiple name="path-3[]">
+      </div>
+      <div class="layui-form-mid layui-word-aux">可按住ctrl选择多张</div>
+    </div>
+</div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" type="submit">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </form>
+</div>
 {{/block}}
+{{block name="js"}}
+	<script type="text/javascript">
+		
 
+	$(function(){
+    $('.imgfile').each(function(index,value){
+      $(value).change(function(){
+        var that = this;
+        $(this.files).each(function(i,v){
+          $(that).siblings().remove();
+          var img = $("<img class='showimg'/>");
+          var reader = new FileReader();
+           reader.onload = function (e) {
+                     img.attr('src',e.target.result); 
+                     img.insertAfter(that);
+                 }
+                 reader.readAsDataURL(v);
+        })
+      })
+    })
+  });
+
+	function upshow(){
+			$('.uploadimg').show(300);
+		}
+
+	function delImg(id){
+		if(confirm('确定删除?')){
+			$.ajax({
+				type:'get',
+				url:'{{:url("productimg/del")}}',
+				data:{'id':id},
+				success:function(res){
+					if(res){
+						$('#im_' + id).fadeOut(200);
+						layui.use('layer', function(){
+						var layer = layui.layer;
+						layer.msg('已删除!',{icon:1});
+						});
+					} else {
+						layui.use('layer', function(){
+						var layer = layui.layer;
+						layer.msg('删除失败!',{icon:1});
+						});
+					}
+				}
+			});
+		}
+	}
+	</script>
+{{/block}}
 

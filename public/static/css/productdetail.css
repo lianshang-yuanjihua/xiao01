@@ -1,0 +1,84 @@
+html,
+body {
+    background-color: #efeff4;
+    height: 100%;
+    background-color: #fff;
+}
+
+.title {
+    margin: 20px 15px 10px;
+    color: #6d6d72;
+    font-size: 15px;
+    padding-bottom: 51px;
+}
+
+.by-card {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.by-card .mui-card-footer:before {
+    height: 0;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+    color: #f5ba4c;
+}
+
+.mui-bar-tab .mui-tab-item {
+    color: #ccc;
+}
+
+.mui-search .mui-placeholder {
+    top: 5px;
+}
+
+.by-index-seach .mui-active::before {
+    height: 30px;
+    line-height: 30px;
+}
+
+.by-spxq-zs {
+    height: 35px;
+    line-height: 35px;
+}
+
+.by-spxq-zs p {
+    width: 33.3%;
+    float: left;
+}
+
+.by-xpxq-one {
+    background-color: #efd8ae;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.by-xpxq-one:active,
+.by-xpxq-one:hover {
+    background-color: #F5BA4C !important;
+}
+
+.by-xpxq-active {
+    background-color: #F5BA4C !important;
+}
+
+.by-spxq-border {
+    border-right: 1px solid #ccc;
+}
+
+.mui-segmented-control .mui-control-item {
+    color: #555555;
+    border: none;
+}
+
+.mui-segmented-control .mui-control-item.mui-active {
+    background-color: #F5BA4C;
+}
+
+.by-bage-gwc {
+    position: absolute;
+    top: 2px;
+    right: 0;
+}

@@ -5,7 +5,9 @@
 {{/block}}
 {{block name="main"}}
 {{include file="public/nav"}}
+
 <div class="mui-content" style="background-color:#fafafa">
+			{{volist name="carts" id="vo"}}
 			<div class="mui-card">
 				<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
 					<div class="mui-input-row mui-checkbox mui-left">
@@ -14,32 +16,31 @@
 					</div>
 				</div>
 				<div class="by-gwc-fl" style="margin-top:8vw">
-					<img src="__STATIC__/images/09.png" style="width: 50px;height:80px;" />
+					<img src="__STATIC__/upload/{{$vo->getProduct->getImg[0]->path}}" style="width: 50px;height:80px;" />
 				</div>
 				<div class="by-gwc-fl" style="width:65%;float:right">
 					<div class="mui-card by-card" style="box-shadow: none;">
-
 						<div class="mui-card-content">
 							<div class="mui-card-content-inner" style="padding:0 5px;">
 								<p>
-									<h4 style="text-align: center;">人参萃取精华丸</h4>
+									<h4 style="text-align: center;">{{$vo->getProduct->title}}</h4>
 								</p>
-								<p style="color: #9b9b9b;padding:0 10px; font-size: 12px;">详情：人参萃取精华丸，中成药名，药食同源，连续服用...</p>
+								<p style="color: #9b9b9b;padding:0 10px; font-size: 12px;">详情：{{$vo->getProduct->content|mb_substr=0,10}}...</p>
 							</div>
 						</div>
 						<div class="mui-card-footer">
-							<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303">650元 /盒</text></span></a>
-
+							<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303">{{$vo->getProduct->price|substr=0,-3}}元 /盒</text></span></a>
 							<div class="mui-numbox" style="width:110px;height:25px">
 								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
 								<input class="mui-input-numbox" type="number" />
 								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
+		{{/volist}}
+		{{if condition="$carts"}}
 			<div class="by-jz">
 				<div style="width: 40%;float:left">
 					<div class="mui-input-row mui-checkbox mui-left">
@@ -53,13 +54,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="mui-content mui-text-center mui-hidden" style="height:100%">
+		{{else/}}
+		<div class="mui-content mui-text-center" style="height:100%">
 			<div class="by-gwc-ktxt">
 				<h4 style="color:#929292">购物车快饿扁了T.T</h4>
 				<h5 style="color:#aeaeae">快给我挑点东西吧</h5>
 				<a href="javascript:void(0)">去逛逛</a>
 			</div>
 		</div>
-
-
+		{{/if}}
 {{/block}}

@@ -11,28 +11,23 @@
 			<div id="slider" class="mui-slider" style="height:150px">
 
 				<div class="mui-slider-group mui-slider-loop">
-					{{volist name="product->getImg" id="src"}}
-					{{if $i eq count($product->getImg)}}
+					
 					<!-- 额外增加的第一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="javascript:void(0)">
-							<img src="__STATIC__/upload/{{$src.path}}" />
+							<img src="__STATIC__/upload/{{$img.slideimg[count($img.slideimg)-1]->path}}" />
 						</a>
 					</div>
-					{{/if}}
-					{{/volist}}
-					{{volist name="product->getImg" id="src"}}
-					{{if $i gt 1}}
-					<!-- 第{{$i-1}}张 -->
+					{{volist name="img['slideimg']" id="src"}}
+					<!-- 第{{$i}}张 -->
 					<div class="mui-slider-item">
 						<a href="javascript:void(0)">
 							<img src="__STATIC__/upload/{{$src.path}}">
 						</a>
 					</div>
-					{{/if}}
 					{{/volist}}
-					{{volist name="product->getImg" id="src"}}
-					{{if $i eq 2}}
+					{{volist name="img['slideimg']" id="src"}}
+					{{if $i eq 1}}
 					<!-- 额外增加的最后一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="javascript:void(0)">
@@ -43,16 +38,14 @@
 					{{/volist}}
 				</div>
 				<div class="mui-slider-indicator">
-					{{volist name="$product->getImg" id="img" key="j"}}
-					{{if $j gt 1}}
+					{{volist name="img['slideimg']" id="vo" key="j"}}
 					<div class="mui-indicator {{$j == 2?'mui-active':''}}"></div>
-					{{/if}}
 					{{/volist}}
 				</div>
 			</div>
 			<div class="mui-card by-card" style="box-shadow: none;">
 				<div class=" mui-card-media" style="height:65vw;">
-					<img src="__STATIC__/upload/{{$product->getImg[0]->path}}" style="height: 100%">
+					<img src="__STATIC__/upload/{{$img['cartimg'][0]->path}}" style="height: 100%">
 				</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner" style="padding:0 5px;">

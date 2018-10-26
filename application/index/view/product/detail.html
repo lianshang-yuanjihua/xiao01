@@ -1,0 +1,105 @@
+{{extend name="public/base"/}}
+{{block name="title"}}详情{{/block}}
+{{block name="css"}}
+    <link rel="stylesheet" type="text/css" href="__CSS__/detail.css">
+{{/block}}
+{{block name="main"}}
+	<nav class="mui-bar mui-bar-tab by-spxq-box-a">
+			<a class="mui-tab-item by-spxq-border" style="width:13%" href="">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-custom"></span>
+				<span class="mui-tab-label">客服</span>
+			</a>
+			<a class="mui-tab-item" style="width:13%;position:relative" href="gwc.html">
+				<span class="mui-badge by-bage-gwc mui-badge-red">3</span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"></span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a class="mui-tab-item by-xpxq-one" style="width:37%;position:relative" href="javascript:void(0)">
+				<span class="mui-badge by-bage-gwc mui-badge-red" style="right:2px;">3</span> 加入购物车
+			</a>
+			<a class="mui-tab-item by-xpxq-one" style="width:37%" href="dfk.html">
+				立即购买
+			</a>
+		</nav>
+		<div class="mui-content">
+
+			<div class=" by-card" style="box-shadow: none;">
+				<div class=" mui-card-media" style="height:65vw;background-image:url(images/11.png)"></div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner" style="padding:0 20px;">
+						<p>
+							<h4>人参萃取精华丸</h4></p>
+						<p style="color: #9b9b9b;">详情：人参萃取精华丸，中成药名，药食同源，连续服用，本品3个月，活化肾脏.精满.气足.神旺,极大改善男性前列腺...</p>
+						<span style="color:#727272;font-weight: bold;">零售价：<text style="color:red">650  元 / 盒</text></span>
+						<div class="by-spxq-zs">
+							<p>快递免邮费</p>
+							<p>剩余：<span>200</span></p>
+							<p>销量：<span>200</span></p>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="mui-card-footer" style="padding:0 15px;">
+					<div class="by-footer-car">
+						<span class="mui-content-padded mui-pull-left" style="color:#727272;font-weight: bold;">购买数量:</span>
+						<div class="mui-numbox mui-pull-left">
+							<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+							<input class="mui-input-numbox" type="number" />
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="mui-content">
+				<div style="padding: 10px 10px;">
+					<div id="segmentedControl" class="mui-segmented-control" style="border:none;background-color:#fff">
+						<a class="mui-control-item mui-active" id="by-one" href="#item1 ">商品详情</a>
+						<a class="mui-control-item" id="by-one" href="#item2">销量和评价</a>
+					</div>
+				</div>
+				<div>
+					<div id="item1" class="mui-control-content mui-active">
+						<div id="scroll" class="">
+							<ul class="mui-table-view">
+								<li class="">
+									<img src="images/11.png" />
+								</li>
+								<li class="">
+									<img src="images/13.png" />
+								</li>
+
+							</ul>
+						</div>
+					</div>
+					<div id="item2" class="mui-control-content">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<div class="mui-card">
+									<div class="mui-card-header">
+										<span>sdad(会员)</span>
+										<h5 class="mui-pull-right">2018-12-12</h5>
+									</div>
+									<div class="mui-card-content">
+										<div class="mui-card-content-inner">
+											<h5>包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）</h>
+										</div>
+									</div>
+									<!-- <div class="mui-card-footer">
+										<img src="images/60x60.gif" />
+									</div> -->
+								</div>
+					
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+
+		</div>
+{{/block}}

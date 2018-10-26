@@ -64,29 +64,32 @@ create table if not exists `sq_cart` (
 `id` int unsigned not null auto_increment comment '主键',
 `productid` int comment '商品ID',
 `userid` int comment '用户ID',
-`buynum` int comment '商品数量',
+`buynum` int default 1 comment '商品数量',
 `created` int comment '添加时间',
 primary key id(`id`)
 ) engine=innodb default charset utf8 comment="购物车表";
 
+insert into sq_cart (productid,userid,created)values(6,1,unix_timestamp());
+
 create table `sq_address`(
 `id` int key auto_increment,
-`consignee` varchar(20),
-`address` varchar(255),
-`mobile` varchar(20),
-`best_time` varchar(50),
-`userid` int,
-`status` tinyint(1) default 0
+`consignee` varchar(20) comment'收货人',
+`address` varchar(255) comment '收货地址',
+`mobile` varchar(20) comment '手机号', 
+`remark` varchar(50) comment '备注',
+`userid` int comment '用户id',
+`status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待发货，2：已发货，3：待确认收货，4：已完成'
 )char set utf8 engine InnoDB comment '地址表';
 
+insert into sq_address (consignee,address,mobile,remark,userid)values('Door','幻想乡新日暮里','12345678901','乖乖站好',1);
 
 create table `sq_order`(
 `id` int key auto_increment,
-`productid`  int,
-`endprice`  varchar(20),
-`buynum`   int,
-`money`   varchar(20),
-`orderid` int
+`productid`  int comment '产品id',
+`uid` int comment '用户id',
+`endprice`  varchar(20) comment '最终价格',
+`buynum`   int comment '购买数量',
+`money`   varchar(20) comment '实付金额'
 )char set utf8 engine InnoDB comment '订单表';
 
 create table if not exists `sq_yclog`(

@@ -12,7 +12,7 @@
 {{elseif condition="$Think.session.successMsg"/}}
 <script type="text/javascript">
 	$(function(){
-        layui.use('layer', function(){
+  layui.use('layer', function(){
   var layer = layui.layer;
   
   layer.msg('{{$Think.session.successMsg}}',{icon:1});
