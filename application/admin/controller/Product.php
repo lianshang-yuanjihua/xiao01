@@ -155,7 +155,6 @@ class Product extends AdminBase {
                     break;
                 }
             }
-
         }
         if ($res) {
             session('successMsg', '产品信息修改成功!上传了' . $success . '张图片!');
@@ -164,7 +163,6 @@ class Product extends AdminBase {
             session('errorMsg', '产品信息修改失败!上传了' . $success . '张图片!');
             $this->redirect('product/productlist');
         }
-
     }
 
     public function checkEmpty($arr) {

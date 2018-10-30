@@ -13,7 +13,15 @@ class Product extends Common {
         return $this->hasMany('productimg', 'productid');
     }
 
-    public function getProduct() {
-        return $this->where('status', 2)->find();
+    public function getProduct($type, $comp = '') {
+        if (!$comp) {
+            return $this->where('status', $type)->find();
+        } else {
+            return $this->where('status', $comp, $type)->find();
+        }
+    }
+
+    public function getProductByID($id) {
+        return $this->where('id', $id)->find();
     }
 }

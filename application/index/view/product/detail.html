@@ -20,25 +20,22 @@
 			<a class="mui-tab-item by-xpxq-one" style="width:37%" href="dfk.html">
 				立即购买
 			</a>
-		</nav>
+		</nav> 
 		<div class="mui-content">
-
 			<div class=" by-card" style="box-shadow: none;">
 				<div class=" mui-card-media" style="height:65vw;background-image:url(images/11.png)"></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner" style="padding:0 20px;">
 						<p>
-							<h4>人参萃取精华丸</h4></p>
-						<p style="color: #9b9b9b;">详情：人参萃取精华丸，中成药名，药食同源，连续服用，本品3个月，活化肾脏.精满.气足.神旺,极大改善男性前列腺...</p>
-						<span style="color:#727272;font-weight: bold;">零售价：<text style="color:red">650  元 / 盒</text></span>
+							<h4>{{$product.title}}</h4></p>
+						<p style="color: #9b9b9b;">详情：{{$product.content}}...</p>
+						<span style="color:#727272;font-weight: bold;">零售价：<text style="color:red">{{$product.price|substr=0,-3}}  元 / 盒</text></span>
 						<div class="by-spxq-zs">
 							<p>快递免邮费</p>
-							<p>剩余：<span>200</span></p>
-							<p>销量：<span>200</span></p>
+							<p>剩余：<span>{{$product.num}}</span></p>
+							<p>销量：<span>{{$product.sellnum}}</span></p>
 						</div>
-
 					</div>
-
 				</div>
 				<div class="mui-card-footer" style="padding:0 15px;">
 					<div class="by-footer-car">
@@ -63,19 +60,17 @@
 					<div id="item1" class="mui-control-content mui-active">
 						<div id="scroll" class="">
 							<ul class="mui-table-view">
+								{{volist name="img['detimg']" id="vo"}}
 								<li class="">
-									<img src="images/11.png" />
+									<img src="__STATIC__/upload/{{$vo.path}}" />
 								</li>
-								<li class="">
-									<img src="images/13.png" />
-								</li>
-
+								{{/volist}}
 							</ul>
 						</div>
 					</div>
 					<div id="item2" class="mui-control-content">
 						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
+							<!-- <li class="mui-table-view-cell">
 								<div class="mui-card">
 									<div class="mui-card-header">
 										<span>sdad(会员)</span>
@@ -86,20 +81,16 @@
 											<h5>包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）</h>
 										</div>
 									</div>
-									<!-- <div class="mui-card-footer">
+									 <div class="mui-card-footer">
 										<img src="images/60x60.gif" />
-									</div> -->
+									</div>
 								</div>
-					
-							</li>
-
+							</li> -->
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		</div>
-
 		</div>
 {{/block}}

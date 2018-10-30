@@ -5,7 +5,7 @@ use app\common\controller\IndexBase;
 class Index extends IndexBase {
 
     public function index() {
-        $data            = model('product')->getProduct();
+        $data            = model('product')->getProduct(2);
         $slideimg        = model('productimg')->getImg($data->id, 1);
         $cartimg         = model('productimg')->getImg($data->id, 0);
         $img['slideimg'] = $slideimg;

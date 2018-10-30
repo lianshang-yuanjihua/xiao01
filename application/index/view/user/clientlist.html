@@ -1,0 +1,53 @@
+{{extend name="public/base"/}}
+{{block name="title"}}设置{{/block}}
+{{block name="css"}}
+    <link rel="stylesheet" type="text/css" href="__CSS__/clientlist.css">
+{{/block}}
+{{block name="main"}}
+    <div class="mui-content">
+            
+            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+                {{volist name="clients" id="vo"}}
+                {{volist name="vo" id="v"}}
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-cell">
+                        <div class="oa-contact-cell mui-table">
+                            <div class="oa-contact-avatar mui-table-cell">
+                                <img src="__STATIC__/upload/{{$v.icon?:'default.png'}}" />
+                            </div>
+                            <div class="oa-contact-content mui-table-cell">
+                                <div class="mui-clearfix">
+                                    <h4 class="oa-contact-name">{{$v.nickname}}</h4>
+                                    <span class="oa-contact-position mui-h6">{{$type[$v.usertype]}}</span>
+                                </div>
+                                <p class="oa-contact-email mui-h6">
+                                    注册时间: {{$v.createtime}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/volist}}
+                {{/volist}}
+               <!--  <li class="mui-table-view-cell">
+                    <div class="mui-slider-cell">
+                        <div class="oa-contact-cell mui-table">
+                            <div class="oa-contact-avatar mui-table-cell">
+                                <img src="__STATIC__/upload/" />
+                            </div>
+                            <div class="oa-contact-content mui-table-cell">
+                                <div class="mui-clearfix">
+                                    <h4 class="oa-contact-name"></h4>
+                                    <span class="oa-contact-position mui-h6"></span>
+                                </div>
+                                <p class="oa-contact-email mui-h6">
+                                    注册时间: 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li> -->
+                
+            </ul>
+        </div>
+{{/block}}

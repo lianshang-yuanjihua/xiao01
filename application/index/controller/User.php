@@ -106,4 +106,17 @@ class User extends IndexBase {
     public function newaddr() {
         return $this->fetch();
     }
+
+    //代理商客户列表
+    public function clientlist() {
+        $id      = session('userInfo.id');
+        $clients = model('user')->getClient($id);
+        $type    = [
+            '',
+            '普通用户',
+            '代理商',
+        ];
+        $this->assign(['clients' => $clients, 'type' => $type]);
+        return $this->fetch();
+    }
 }
