@@ -63,16 +63,17 @@ create table if not exists `sq_productimg`(
 `productid` int(11) comment '对应产品主键ID'
 ) engine=innodb default charset utf8 comment="产品图片表";
 
+drop table sq_cart;
 create table if not exists `sq_cart` (
 `id` int unsigned not null auto_increment comment '主键',
 `productid` int comment '商品ID',
 `userid` int comment '用户ID',
-`buynum` int default 1 comment '产品数量',
 `created` int comment '添加时间',
 primary key id(`id`)
 ) engine=innodb default charset utf8 comment="购物车表";
 
 insert into sq_cart (productid,userid,created)values(6,1,unix_timestamp());
+select * from sq_cart;
 
 drop table sq_address;
 create table `sq_address`(
@@ -93,7 +94,6 @@ create table `sq_order`(
 `uid` int not null comment '用户id',
 `addr_id` int comment '此订单送达地址id',
 `endprice`  varchar(20) comment '最终价格',
-`money`   varchar(20) comment '实付金额',
 `status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待发货，2：已发货，3：待确认收货，4：已完成'
 )char set utf8 engine InnoDB comment '订单表';
 

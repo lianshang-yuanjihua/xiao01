@@ -8,11 +8,12 @@
 
 <div class="mui-content" style="background-color:#fafafa">
 			{{volist name="carts" id="vo"}}
+			
 			<div class="mui-card">
 				<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
 					<div class="mui-input-row mui-checkbox mui-left">
 						<label>&nbsp;</label>
-						<input name="checkbox" value="Item 1" type="checkbox">
+						<input  name="checkbox" value="Item 1" type="checkbox">
 					</div>
 				</div>
 				<div class="by-gwc-fl" style="margin-top:8vw">
@@ -31,8 +32,8 @@
 						<div class="mui-card-footer">
 							<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303">{{$vo->getProduct->price|substr=0,-3}}元 /盒</text></span></a>
 							<div class="mui-numbox" style="width:110px;height:25px">
-								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-								<input class="mui-input-numbox" type="number" />
+								<button  class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+								<input class="mui-input-numbox" value="1" type="number" />
 								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 							</div>
 						</div>
@@ -63,4 +64,16 @@
 			</div>
 		</div>
 		{{/if}}
+{{/block}}
+{{block name="js"}}
+<script type="text/javascript">
+	$(function(){
+		$('.mui-input-numbox').change(function(){
+			if($(this).val() <=1){
+				$(this).val(1);
+				$(this).prev().attr('disabled',true);
+			}
+		});
+	});
+</script>
 {{/block}}

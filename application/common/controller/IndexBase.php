@@ -20,6 +20,5 @@ class IndexBase extends Controller {
     }
 
     public function _initialize() {
-        echo "<script>console.log('前台控制器初始化')</script>";
     }
 }

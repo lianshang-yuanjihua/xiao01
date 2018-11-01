@@ -11,8 +11,7 @@
 
 namespace think;
 
-class View
-{
+class View {
     // 视图实例
     protected static $instance;
     // 模板引擎实例
@@ -30,8 +29,7 @@ class View
      * @param array $engine  模板引擎参数
      * @param array $replace  字符串替换参数
      */
-    public function __construct($engine = [], $replace = [])
-    {
+    public function __construct($engine = [], $replace = []) {
         // 初始化模板引擎
         $this->engine($engine);
         // 基础替换字符串
@@ -44,9 +42,9 @@ class View
         $baseReplace = [
             '__ROOT__'   => $root,
             '__URL__'    => $base . '/' . $request->module() . '/' . Loader::parseName($request->controller()),
-            '__STATIC__' => $root . '/static',
-            '__CSS__'    => $root . '/static/css',
-            '__JS__'     => $root . '/static/js',
+            '__STATIC__' => $root . '/public/static',
+            '__CSS__'    => $root . '/public/static/css',
+            '__JS__'     => $root . '/public/static/js',
         ];
         $this->replace = array_merge($baseReplace, (array) $replace);
     }
@@ -58,8 +56,7 @@ class View
      * @param array $replace  字符串替换参数
      * @return object
      */
-    public static function instance($engine = [], $replace = [])
-    {
+    public static function instance($engine = [], $replace = []) {
         if (is_null(self::$instance)) {
             self::$instance = new self($engine, $replace);
         }
@@ -73,8 +70,7 @@ class View
      * @param mixed $value 变量值
      * @return void
      */
-    public static function share($name, $value = '')
-    {
+    public static function share($name, $value = '') {
         if (is_array($name)) {
             self::$var = array_merge(self::$var, $name);
         } else {
@@ -89,8 +85,7 @@ class View
      * @param mixed $value 变量值
      * @return $this
      */
-    public function assign($name, $value = '')
-    {
+    public function assign($name, $value = '') {
         if (is_array($name)) {
             $this->data = array_merge($this->data, $name);
         } else {
@@ -105,8 +100,7 @@ class View
      * @param array|string $options 引擎参数
      * @return $this
      */
-    public function engine($options = [])
-    {
+    public function engine($options = []) {
         if (is_string($options)) {
             $type    = $options;
             $options = [];
@@ -129,8 +123,7 @@ class View
      * @param mixed         $value 参数值
      * @return $this
      */
-    public function config($name, $value = null)
-    {
+    public function config($name, $value = null) {
         $this->engine->config($name, $value);
         return $this;
     }
@@ -145,8 +138,7 @@ class View
      * @return string
      * @throws Exception
      */
-    public function fetch($template = '', $vars = [], $replace = [], $config = [], $renderContent = false)
-    {
+    public function fetch($template = '', $vars = [], $replace = [], $config = [], $renderContent = false) {
         // 模板变量
         $vars = array_merge(self::$var, $this->data, $vars);
 
@@ -180,8 +172,7 @@ class View
      * @param string        $replace    替换内容
      * @return $this
      */
-    public function replace($content, $replace = '')
-    {
+    public function replace($content, $replace = '') {
         if (is_array($content)) {
             $this->replace = array_merge($this->replace, $content);
         } else {
@@ -199,8 +190,7 @@ class View
      * @param array  $config     模板参数
      * @return mixed
      */
-    public function display($content, $vars = [], $replace = [], $config = [])
-    {
+    public function display($content, $vars = [], $replace = [], $config = []) {
         return $this->fetch($content, $vars, $replace, $config, true);
     }
 
@@ -210,8 +200,7 @@ class View
      * @param string    $name  变量名
      * @param mixed     $value 变量值
      */
-    public function __set($name, $value)
-    {
+    public function __set($name, $value) {
         $this->data[$name] = $value;
     }
 
@@ -221,8 +210,7 @@ class View
      * @param string $name 模板变量
      * @return mixed
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         return $this->data[$name];
     }
 
@@ -232,8 +220,7 @@ class View
      * @param string $name 模板变量名
      * @return bool
      */
-    public function __isset($name)
-    {
+    public function __isset($name) {
         return isset($this->data[$name]);
     }
 }

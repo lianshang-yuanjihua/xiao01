@@ -10,12 +10,14 @@
 				<span class="mui-tab-label">客服</span>
 			</a>
 			<a class="mui-tab-item" style="width:13%;position:relative" href="gwc.html">
-				<span class="mui-badge by-bage-gwc mui-badge-red">3</span>
+				{{if $cartnum}}
+				<span class="mui-badge by-bage-gwc mui-badge-red">{{$cartnum}}</span>
+				{{/if}}
 				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
-			<a class="mui-tab-item by-xpxq-one" style="width:37%;position:relative" href="javascript:void(0)">
-				<span class="mui-badge by-bage-gwc mui-badge-red" style="right:2px;">3</span> 加入购物车
+			<a class="mui-tab-item by-xpxq-one" style="width:37%;position:relative" onclick="add('{{$product.id}}');" href="javascript:;">
+				加入购物车
 			</a>
 			<a class="mui-tab-item by-xpxq-one" style="width:37%" href="dfk.html">
 				立即购买
@@ -38,22 +40,13 @@
 					</div>
 				</div>
 				<div class="mui-card-footer" style="padding:0 15px;">
-					<div class="by-footer-car">
-						<span class="mui-content-padded mui-pull-left" style="color:#727272;font-weight: bold;">购买数量:</span>
-						<div class="mui-numbox mui-pull-left">
-							<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-							<input class="mui-input-numbox" type="number" />
-							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-						</div>
-					</div>
-
 				</div>
 			</div>
 			<div class="mui-content">
 				<div style="padding: 10px 10px;">
 					<div id="segmentedControl" class="mui-segmented-control" style="border:none;background-color:#fff">
 						<a class="mui-control-item mui-active" id="by-one" href="#item1 ">商品详情</a>
-						<a class="mui-control-item" id="by-one" href="#item2">销量和评价</a>
+						<!-- <a class="mui-control-item" id="by-one" href="#item2">销量和评价</a> -->
 					</div>
 				</div>
 				<div>
@@ -93,4 +86,25 @@
 		</div>
 		</div>
 		</div>
+{{/block}}
+{{block name="js"}}
+<script type="text/javascript">
+	
+	function add(id){
+		var num = $('[type="number"]').val();
+		$.ajax({
+			type:'post',
+			url:'{{:url("cart/add")}}',
+			data:{'productid':id,'buynum':num},
+			success:function(res){
+				if(res != false){
+					console.log(res);
+				location.href="{{:url('product/detail',['id'=>$product.id])}}";
+				} else {
+					mui.toast('加入购物车失败');
+				}
+			}
+		})
+	}
+</script>
 {{/block}}
