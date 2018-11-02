@@ -5,17 +5,13 @@ use app\common\model\Common;
 
 class Product extends Common {
 
-    public function getImg() {
-        return $this->hasMany('productimg', 'productid');
-    }
-
     public function getImgs() {
         return $this->hasMany('productimg', 'productid');
     }
 
     public function getProduct($type, $comp = '') {
         if (!$comp) {
-            return $this->where('status', $type)->find();
+            return $this->where('status', $type)->order('id desc')->find();
         } else {
             return $this->where('status', $comp, $type)->find();
         }

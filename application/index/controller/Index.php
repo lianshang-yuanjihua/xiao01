@@ -6,8 +6,8 @@ class Index extends IndexBase {
 
     public function index() {
         $data            = model('product')->getProduct(2);
-        $slideimg        = model('productimg')->getImg($data->id, 1);
-        $cartimg         = model('productimg')->getImg($data->id, 0);
+        $slideimg        = model('productimg')->getImg($data['id'], 1);
+        $cartimg         = model('productimg')->getImg($data['id'], 0);
         $img['slideimg'] = $slideimg;
         $img['cartimg']  = $cartimg;
         $this->assign([

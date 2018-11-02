@@ -15,7 +15,7 @@ class IndexBase extends Controller {
     public function checklogin() {
         if (!session('userInfo')) {
             session('errorMsg', '请先登录~');
-            $this->redirect('user/login');
+            $this->redirect('user/login')->remember();
         }
     }
 

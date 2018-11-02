@@ -1,7 +1,8 @@
 <?php
 
 namespace app\wxpayAPI\controller;
-require_once '../lib/WxPay.Notify.php';
+require_once APP_PATH . 'wxpayapi/lib/WxPay.Notify.php';
+use \WxPayNotify;
 
 class WeixinPay extends WxPayNotify {
 
@@ -10,7 +11,7 @@ class WeixinPay extends WxPayNotify {
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
 
         // 这句file_put_contents是用来查看服务器返回的XML数据 测试完可以删除了
-        file_put_contents('./Api/wxpay/logs/log.txt', $xml, FILE_APPEND);
+        file_put_contents('./logs/log.txt', $xml, FILE_APPEND);
 
         //将服务器返回的XML数据转化为数组
         //$data = json_decode(json_encode(simplexml_load_string($xml,'SimpleXMLElement',LIBXML_NOCDATA)),true);
@@ -25,7 +26,7 @@ class WeixinPay extends WxPayNotify {
         if (($sign === $data_sign) && ($data['return_code'] == 'SUCCESS') && ($data['result_code'] == 'SUCCESS')) {
             $result = $data;
             // 这句file_put_contents是用来查看服务器返回的XML数据 测试完可以删除了
-            file_put_contents('./Api/wxpay/logs/log1.txt', $xml, FILE_APPEND);
+            file_put_contents('./logs/log1.txt', $xml, FILE_APPEND);
 
             //获取服务器返回的数据
             $order_sn  = $data['out_trade_no']; //订单单号

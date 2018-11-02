@@ -12,4 +12,8 @@ class Cart extends Common {
         return $this->where('userid', $id)->count();
     }
 
+    public function delByID($id) {
+        return $this->where('id', $id)->delete();
+    }
+
 }

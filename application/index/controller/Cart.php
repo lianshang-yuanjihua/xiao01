@@ -9,14 +9,23 @@ class Cart extends IndexBase {
         $data            = input('post.');
         $data['userid']  = session('userInfo.id');
         $data['created'] = time();
-        $res             = null;
-        if ($data['buynum']) {
-            $res = model('cart')->save($data);
-        }
+        $res             = model('cart')
+            ->where('userid', $data['userid'])
+            ->where('productid', $data['productid'])->setInc('num');
+
         if ($res) {
-            echo "1";
+            echo "0";
         } else {
-            echo '0';
+            if (model('cart')->save($data)) {
+                echo '1';
+            } else {
+                echo "2";
+            }
         }
+    }
+
+    public function del() {
+        $id = input('param.id');
+        return model('cart')->delByID($id);
     }
 }

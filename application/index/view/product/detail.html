@@ -3,13 +3,14 @@
 {{block name="css"}}
     <link rel="stylesheet" type="text/css" href="__CSS__/detail.css">
 {{/block}}
+{{block name="header"}}<a class=" mui-icon mui-icon-more mui-pull-right" style="color:#fff"></a>{{/block}}
 {{block name="main"}}
 	<nav class="mui-bar mui-bar-tab by-spxq-box-a">
 			<a class="mui-tab-item by-spxq-border" style="width:13%" href="">
 				<span class="mui-icon mui-icon-extra mui-icon-extra-custom"></span>
 				<span class="mui-tab-label">客服</span>
 			</a>
-			<a class="mui-tab-item" style="width:13%;position:relative" href="gwc.html">
+			<a class="mui-tab-item" style="width:13%;position:relative"  onclick='location.href="{{:url('user/cart')}}"'>
 				{{if $cartnum}}
 				<span class="mui-badge by-bage-gwc mui-badge-red">{{$cartnum}}</span>
 				{{/if}}
@@ -91,20 +92,33 @@
 <script type="text/javascript">
 	
 	function add(id){
-		var num = $('[type="number"]').val();
-		$.ajax({
-			type:'post',
-			url:'{{:url("cart/add")}}',
-			data:{'productid':id,'buynum':num},
-			success:function(res){
-				if(res != false){
-					console.log(res);
-				location.href="{{:url('product/detail',['id'=>$product.id])}}";
-				} else {
-					mui.toast('加入购物车失败');
+		var userid = '{{$Think.session.userInfo.id}}';
+		if(userid !=false){
+			$.ajax({
+				type:'post',
+				url:'{{:url("cart/add")}}',
+				data:{'productid':id},
+				success:function(res){
+					switch (res) {
+						case '0':
+							mui.toast('购物车商品数+1');
+							break;
+						case '1':
+							location.href="{{:url('product/detail',['id'=>$product.id])}}";
+							break;
+						case '2':
+							mui.toast('加入购物车失败');
+							break;
+						default:
+							mui.toast('数据错误');
+							break;
+					}
+
 				}
-			}
-		})
+			});
+		} else {
+			location.href='{{:url("user/login")}}';
+		}
 	}
 </script>
 {{/block}}

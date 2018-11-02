@@ -3,69 +3,74 @@
 {{block name="css"}}
 <link rel="stylesheet" type="text/css" href="__CSS__/cart.css">
 {{/block}}
+{{block name="header"}}
+<a class=" mui-icon mui-icon-trash mui-pull-right by-remove-btn" data-url='{{:url("cart/del")}}' style="color:#fff"></a>
+		<a class=" mui-icon mui-icon-checkmarkempty mui-pull-right by-remove-succes mui-hidden" style="color:#fff"></a>
+{{/block}}
 {{block name="main"}}
+
 {{include file="public/nav"}}
 
-<div class="mui-content" style="background-color:#fafafa">
+<div class="mui-content" style="background-color:#fafafa;margin-bottom:50px;">
 			{{volist name="carts" id="vo"}}
-			
-			<div class="mui-card">
-				<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
-					<div class="mui-input-row mui-checkbox mui-left">
-						<label>&nbsp;</label>
-						<input  name="checkbox" value="Item 1" type="checkbox">
-					</div>
+			<div class="mui-card by-card-data" data-carid="{{$vo->id}}" data-id="{{$vo->getProduct->id}}">
+			<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
+				<div class="mui-input-row mui-checkbox mui-left  by-check-goods">
+					<label style="padding-left: 40px;">&nbsp;</label>
+					<input name="checkbox" value="Item 1" type="checkbox" class="by-check by-check0" checked />
 				</div>
-				<div class="by-gwc-fl" style="margin-top:8vw">
-					<img src="__STATIC__/upload/{{$vo->getProduct->getImg[0]->path}}" style="width: 50px;height:80px;" />
+				<div class="mui-input-row mui-checkbox mui-left by-remove-goods mui-hidden">
+					<a class=" mui-icon mui-icon-trash" style="color:red;margin-left:20px;font-size:36px"></a>
 				</div>
-				<div class="by-gwc-fl" style="width:65%;float:right">
-					<div class="mui-card by-card" style="box-shadow: none;">
-						<div class="mui-card-content">
-							<div class="mui-card-content-inner" style="padding:0 5px;">
-								<p>
-									<h4 style="text-align: center;">{{$vo->getProduct->title}}</h4>
-								</p>
-								<p style="color: #9b9b9b;padding:0 10px; font-size: 12px;">详情：{{$vo->getProduct->content|mb_substr=0,10}}...</p>
-							</div>
+			</div>
+			<div class="by-gwc-fl" style="margin-top:8vw">
+		<img {{foreach $vo->getProduct->getImgs as $img}} {{if $img.type eq 0}} src="__STATIC__/upload/{{$img.path}}" {{/if}} {{/foreach}} style="width: 50px;height:80px;" />
+			</div>
+			<div class="by-gwc-fl" style="width:65%;float:right">
+				<div class="mui-card by-card" style="box-shadow: none;">
+
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner" style="padding:0 5px;">
+							<p>
+								<h4 style="text-align: center;">{{$vo->getProduct->title}}</h4>
+							</p>
+							<p style="font-weight:bold;color: #9b9b9b;padding:0 10px; font-size: 12px;">{{$vo->getProduct->content|mb_substr=0,12}}...</p>
 						</div>
-						<div class="mui-card-footer">
-							<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303">{{$vo->getProduct->price|substr=0,-3}}元 /盒</text></span></a>
-							<div class="mui-numbox" style="width:110px;height:25px">
-								<button  class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-								<input class="mui-input-numbox" value="1" type="number" />
-								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-							</div>
+					</div>
+					<div class="mui-card-footer">
+						<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303" class="price0 signprice">{{$vo->getProduct->price|mb_substr=0,-3}}</text>元/盒</span></a>
+						<div class="mui-numbox" style="width:110px;height:25px">
+							<button class="mui-btn mui-btn-numbox-minus by-btn-reduce" type="button">-</button>
+							<input class="mui-input-numbox by-input-num v0" type="number" value="{{$vo.num}}" />
+							<button class="mui-btn mui-btn-numbox-plus by-btn-add" type="button">+</button>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		{{/volist}}
-		{{if condition="$carts"}}
-			<div class="by-jz">
-				<div style="width: 40%;float:left">
-					<div class="mui-input-row mui-checkbox mui-left">
-						<label>全选</label>
-						<input name="checkbox" value="Item 2" type="checkbox" checked style="top:9px;">
+		<div class="by-jz">
+					<div style="width: 40%;float:left">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label>全选</label>
+							<input name="checkbox" value="Item 2" type="checkbox" checked style="top:9px;" id="by-checkAll">
+						</div>
 					</div>
-				</div>
-				<div class="by=jz-rt" style="width: 60%;float:left;color:#a7a7a7">
-					合计：<text style="color:#ff0303">44655</text>
-					<a href="javascript:void(0)" class="by-jz-btn">结算</a>
-				</div>
-			</div>
+					<div class="by=jz-rt" style="width: 60%;float:left;color:#a7a7a7">
+						合计：<text style="color:#ff0303" id="by-hj"></text>
+						<a href="javascript:void(0)" data-url="{{:url('order/createorder')}}" class="by-jz-btn">结算</a>
+					</div>
+				</div>	
+	<div class="mui-content mui-text-center mui-hidden by-noGoods" style="height:100%">
+		<div class="by-gwc-ktxt">
+			<h4 style="color:#929292">购物车快饿扁了T.T</h4>
+			<h5 style="color:#aeaeae">快给我挑点东西吧</h5>
+			<a href="javascript:void(0)">去逛逛</a>
 		</div>
-		{{else/}}
-		<div class="mui-content mui-text-center" style="height:100%">
-			<div class="by-gwc-ktxt">
-				<h4 style="color:#929292">购物车快饿扁了T.T</h4>
-				<h5 style="color:#aeaeae">快给我挑点东西吧</h5>
-				<a href="javascript:void(0)">去逛逛</a>
-			</div>
-		</div>
-		{{/if}}
+	</div>
 {{/block}}
 {{block name="js"}}
+<script type="text/javascript" src="__JS__/gwc.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('.mui-input-numbox').change(function(){
@@ -73,6 +78,7 @@
 				$(this).val(1);
 				$(this).prev().attr('disabled',true);
 			}
+			priceAll();
 		});
 	});
 </script>

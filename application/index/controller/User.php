@@ -81,7 +81,7 @@ class User extends IndexBase {
             $res = $user->save($data);
 
             $res ? session('successMsg', '注册成功!') &&
-            $this->redirect('index/index') : session('errorMsg', '注册失败!') &&
+            $this->redirect('user/login') : session('errorMsg', '注册失败!') &&
             $this->redirect('user/register');
         } else {
             session('errorMsg', $validate->getError());

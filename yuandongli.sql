@@ -53,8 +53,8 @@ create table if not exists `sq_product` (
 
 insert into sq_product(title,price,num,content)values('源动力',670,500,'产品说明');
 
-
-select * from sq_productimg;
+update sq_product set `status` = 2 where id=6;
+select * from sq_product;
 
 create table if not exists `sq_productimg`(
 `id` int unsigned not null primary key auto_increment comment '主键',
@@ -68,6 +68,7 @@ create table if not exists `sq_cart` (
 `id` int unsigned not null auto_increment comment '主键',
 `productid` int comment '商品ID',
 `userid` int comment '用户ID',
+`num` int default 1 comment '商品数量',
 `created` int comment '添加时间',
 primary key id(`id`)
 ) engine=innodb default charset utf8 comment="购物车表";
@@ -83,6 +84,7 @@ create table `sq_address`(
 `mobile` varchar(20) comment '手机号', 
 `zipcode` int(6) comment '邮政编码',
 `remark` varchar(50) comment '备注',
+`status` tinyint(1) default 0 comment '地址状态 0 为普通 1为默认',
 `userid` int comment '用户id'
 )char set utf8 engine InnoDB comment '地址表';
 
