@@ -13,7 +13,7 @@
 
 <div class="mui-content" style="background-color:#fafafa;margin-bottom:50px;">
 			{{volist name="carts" id="vo"}}
-			<div class="mui-card by-card-data" data-carid="{{$vo->id}}" data-id="{{$vo->getProduct->id}}">
+			<div class="mui-card by-card-data" data-carid="{{$vo.id}}" data-id="{{$vo->getProduct}}">
 			<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
 				<div class="mui-input-row mui-checkbox mui-left  by-check-goods">
 					<label style="padding-left: 40px;">&nbsp;</label>

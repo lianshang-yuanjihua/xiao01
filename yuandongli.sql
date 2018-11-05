@@ -49,7 +49,7 @@ create table if not exists `sq_product` (
 `sellnum` int(11) default 0 comment '销售数量',
 `content` text comment '产品描述简介',
 `status` tinyint(1) default 1 comment '产品状态'
-) engine=innodb default charset utf8 comment="产品表";
+) engine=innodb default charset utf8 comment='产品表';
 
 insert into sq_product(title,price,num,content)values('源动力',670,500,'产品说明');
 
@@ -61,7 +61,7 @@ create table if not exists `sq_productimg`(
 `path` varchar(255) comment '图片路径及名称',
 `type` tinyint default 0 comment '图片类型',
 `productid` int(11) comment '对应产品主键ID'
-) engine=innodb default charset utf8 comment="产品图片表";
+) engine=innodb default charset utf8 comment='产品图片表';
 
 drop table sq_cart;
 create table if not exists `sq_cart` (
@@ -71,7 +71,7 @@ create table if not exists `sq_cart` (
 `num` int default 1 comment '商品数量',
 `created` int comment '添加时间',
 primary key id(`id`)
-) engine=innodb default charset utf8 comment="购物车表";
+) engine=innodb default charset utf8 comment='购物车表';
 
 insert into sq_cart (productid,userid,created)values(6,1,unix_timestamp());
 select * from sq_cart;

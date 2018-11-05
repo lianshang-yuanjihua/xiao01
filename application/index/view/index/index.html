@@ -18,9 +18,11 @@
 					<!-- 额外增加的第一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="javascript:void(0)">
+							{{if !empty($img.slideimg[count($img.slideimg)-1]->path)}}
 							<img src="__STATIC__/upload/{{$img.slideimg[count($img.slideimg)-1]->path}}" />
+							{{/if}}
 						</a>
-					</div>
+					</div>	
 					{{volist name="img['slideimg']" id="src"}}
 					<!-- 第{{$i}}张 -->
 					<div class="mui-slider-item">
@@ -48,7 +50,9 @@
 			</div>
 			<div class="mui-card by-card" style="box-shadow: none;">
 				<div class=" mui-card-media" style="height:65vw;">
+					{{if !empty($img['cartimg'][0])}}
 					<img src="__STATIC__/upload/{{$img['cartimg'][0]->path}}" style="height: 100%">
+					{{/if}}
 				</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner" style="padding:0 5px;">
