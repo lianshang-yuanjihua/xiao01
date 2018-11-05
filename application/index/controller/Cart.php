@@ -12,7 +12,6 @@ class Cart extends IndexBase {
         $res             = model('cart')
             ->where('userid', $data['userid'])
             ->where('productid', $data['productid'])->setInc('num');
-
         if ($res) {
             echo "0";
         } else {

@@ -7,20 +7,14 @@ class Order extends IndexBase {
         $data          = input('post.');
         $order         = [];
         $pro           = [];
-        $order['addr'] = model('address')->getDefaultAddr(session('userInfo.id'));
-        foreach ($data as $key => $value) {
-            switch ($key) {
-            case 'shop':
-                foreach ($value as $k => $v) {
-                    $pro[$v['number']] = model('product')->getProductByID($v['id']);
-                }
-                $order['pro'] = $pro;
-                break;
-            case 'totalPrice':
-                $order['total'] = $value;
-                break;
-            }
+        $order['addr'] = model('address')->getAddr(session('userInfo.id'), 1);
+        if (empty($order['addr'])) {
+            $order['addr'] = model('address')->getAddr(session('userInfo.id'), 0);
         }
+        $order['product'] = model('product')->getProductByID(implode(',', $data['id']), 'in');
+
+        $order['totalprice'] = $data['totalprice'];
+        $order['num']        = $data['num'];
         $this->assign('order', $order);
         return $this->fetch();
     }

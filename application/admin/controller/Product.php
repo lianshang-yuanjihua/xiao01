@@ -78,9 +78,9 @@ class Product extends AdminBase {
         $file      = request()->file();
         $productid = input('param.id');
         $res       = model('product')->where('id', $productid)->update($data);
-        // echo "<pre>";
-        // print_r($this->checkEmpty($file));
-        // exit;
+        echo "<pre>";
+        var_dump($this->checkEmpty($file));
+        exit;
         if ($this->checkEmpty($file)) {
             $path    = ROOT_PATH . "public" . DS . "static" . DS . "upload";
             $success = 0;
@@ -165,16 +165,14 @@ class Product extends AdminBase {
         }
     }
 
-    public function checkEmpty($arr) {
-        if (is_array($arr)) {
-            foreach ($arr as $value) {
-                if (is_array($value)) {
-                    $this->checkEmpty($value);
+    public function checkEmpty($value) {
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                if (!empty($v)) {
+                    return true;
                 }
-                return !empty($value);
             }
-        } else {
-            return $arr ? true : false;
         }
+        return $value ? true : false;
     }
 }

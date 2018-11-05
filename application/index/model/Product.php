@@ -17,7 +17,11 @@ class Product extends Common {
         }
     }
 
-    public function getProductByID($id) {
-        return $this->where('id', $id)->find();
+    public function getProductByID($id, $comp = '') {
+        if (!$comp) {
+            return $this->where('id', $id)->find();
+        } else {
+            return $this->where('id', $comp, $id)->select();
+        }
     }
 }

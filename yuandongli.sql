@@ -14,13 +14,14 @@ create table if not exists `sq_user`(
 `password` varchar(255) not null comment '密码',
 `paypwd` varchar(255) comment '支付密码',
 `nickname` varchar(255) not null comment '昵称',
-`icon` varchar(255),
+`icon` varchar(255) comment '头像',
 `sex` tinyint(1) default 1 comment '性别',
 `cloudwh` double(15,3) not null default 0 comment '云仓余额',
 `balance` double(15,3) not null default 0 comment '用户余额',
 `total_income` double(15,3) not null default 0 comment '用户总收入',
 `voucher` tinyint default 1 comment '代金券',
-`usertype` tinyint(1) default 1 comment'账户类型',
+`usertype` tinyint(1) default 1 comment'账户类型:0为普通会员,1为创业代理,2为都市代理',
+`share` int default 0 comment '推荐分享套餐数量',
 `status`tinyint(1) default 1 comment'账户状态',
 `createtime` int unsigned comment '用户创建时间'
 )char set utf8 engine InnoDB comment '用户表';
@@ -41,21 +42,24 @@ update sq_user set pid = 1 where id IN(4,5);
 update sq_user set pid = 4 where id IN(6,7);
 update sq_user set pid = 5 where id IN(8,9);
 
+drop table if exists sq_product;
+
 create table if not exists `sq_product` (
 `id` int unsigned not null primary key auto_increment comment '主键',
 `title` varchar(255) not null comment '产品名称',
 `price` decimal(16,2) not null comment '价格',
+`offer` decimal(16,2) not null comment '优惠价格',
 `num` int(11) default 0 comment '库存数量',
 `sellnum` int(11) default 0 comment '销售数量',
 `content` text comment '产品描述简介',
 `status` tinyint(1) default 1 comment '产品状态'
 ) engine=innodb default charset utf8 comment="产品表";
 
-insert into sq_product(title,price,num,content)values('源动力',670,500,'产品说明');
-
-update sq_product set `status` = 2 where id=6;
+insert into sq_product(title,price,num,content)values('源动力',670,5700,500,'产品说明');
+update sq_product set `status` = 2 where id=1;
 select * from sq_product;
 
+drop table if exists sq_productimg;
 create table if not exists `sq_productimg`(
 `id` int unsigned not null primary key auto_increment comment '主键',
 `path` varchar(255) comment '图片路径及名称',
@@ -63,7 +67,7 @@ create table if not exists `sq_productimg`(
 `productid` int(11) comment '对应产品主键ID'
 ) engine=innodb default charset utf8 comment="产品图片表";
 
-drop table sq_cart;
+drop table if exists sq_cart;
 create table if not exists `sq_cart` (
 `id` int unsigned not null auto_increment comment '主键',
 `productid` int comment '商品ID',
@@ -76,7 +80,7 @@ primary key id(`id`)
 insert into sq_cart (productid,userid,created)values(6,1,unix_timestamp());
 select * from sq_cart;
 
-drop table sq_address;
+drop table if exists sq_address;
 create table `sq_address`(
 `id` int key auto_increment,
 `consignee` varchar(20) comment'收货人',
@@ -88,7 +92,9 @@ create table `sq_address`(
 `userid` int comment '用户id'
 )char set utf8 engine InnoDB comment '地址表';
 
-insert into sq_address (consignee,address,mobile,remark,userid)values('Door','幻想乡新日暮里','12345678901','乖乖站好',1);
+select * from sq_address;
+
+insert into sq_address (consignee,address,mobile,remark,status,userid)values('Door','幻想乡新日暮里','12345678901','乖乖站好',1,1);
 
 
 create table `sq_order`( 
