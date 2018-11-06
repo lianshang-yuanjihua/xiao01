@@ -1,9 +1,184 @@
 {{extend name="public/base"/}}
 {{block name="title"}}设置{{/block}}
 {{block name="css"}}
-    <link rel="stylesheet" type="text/css" href="__CSS__/corder.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/order.css">
 {{/block}}
 {{block name="header"}}<a class=" mui-icon mui-icon-more mui-pull-right" style="color:#fff"></a>{{/block}}
 {{block name="main"}}
-     
-{{/block}}  doo
+      <div class="mui-content by-content" style="background-color:#fafafa">
+		<ul class="mui-table-view mui-table-view-chevron">
+			<li class="mui-table-view-cell mui-media by-shdz-underline" style="position:relative">
+				<span class="mui-icon mui-icon-location mui-pull-left"></span>
+				<span class="mui-navigate-right mui-pull-left" style="margin-left:5px">
+					<div class="mui-media-body">
+						收货人 <span class="by-Customer">{{$order['addr']->consignee}}</span> <span class="by-Customer-phone">{{$order['addr']->mobile}}</span>
+						<p class='mui-ellipsis'>收货地址：<span class="by-goods-address" data-addressid="{{$order['addr']->id}}">{{$order['addr']->address}}</span></p>
+					</div>
+				</span>
+				<img src="__STATIC__/images/underline.png" / style="position:absolute;bottom:0;left:0;">
+			</li>
+		</ul>
+		{{volist name="$order['product']" id="vo"}}
+		<div class="mui-card by-data-goodsid" data-off="{{$vo.offer|substr=0,-3}}" data-goodsprice="{{$vo.price|substr=0,-3}}" data-goodsid="{{$vo.id}}" data-pronum="{{$order['num'][$i-1]}}" >
+			<div class="by-gwc-fl" style="margin-top:4vw;margin-left:1vw;">
+				{{foreach $vo->getImgs as $value}}
+				{{if $value->type == 0}}
+				<img src="__STATIC__/upload/{{$value->path}}" style="width: 50px;height:80px;" />
+				{{/if}}
+				{{/foreach}}
+			</div>
+			<div class="by-gwc-fl" style="width: 60%;">
+				<div class="mui-card by-card" style="box-shadow: none;">
+
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner" style="padding:0 5px;">
+							<p>
+								<h4 style="text-align: center;">{{$vo->title}}</h4>
+							</p>
+							<p style="color: #9b9b9b;padding:0 10px; font-size: 12px;">详情：{{$vo->content|mb_substr=0,18}}...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<h5 class="by-gwcjs-jg">￥<span class="by-goodsprice">{{$vo->price|substr=0,-3}}</span>元/盒</h5>
+			<div class="by-dsh-b mui-pull-left" style="padding-right: 20px;">
+				<p class="mui-text-right"><strong style="color:#ff3434;font-size:22px">x<span class="by-goodsnumber">{{$order['num'][$i-1]}}</span></strong></p>
+			</div>
+		</div>
+		{{/volist}}
+		<div class="mui-card">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell mui-media">
+
+					<div class="mui-media-body by-media-body">
+						配送方式
+						<h5 class="mui-pull-right">免运费普通快递</h5>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+
+					<div class="mui-media-body by-media-body">
+						商品金额<strong class="mui-pull-right">￥<span class="by-goodsshop">{{$order['totalprice']}}</span></strong>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+
+					<div class="mui-media-body by-media-body">
+						运费<strong class="mui-pull-right">￥<span class="by-goodsadress">0</span></strong>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+		<div class="by-shdz-tj">
+			<p>合计：<strong style="color:#ff3434;">￥<span class="by-totaltj"></span></strong>
+				<a href="javascript:void(0)" data-url="{{:url('order/order')}}" class="mui-pull-right by-total-btn">提交订单</a>
+			</p>
+
+		</div>
+
+	</div>
+	<div class="by-pay-box mui-hidden">
+		<div class="by-pay-item">
+			<div class="by-pay-back">
+
+			</div>
+			<a href="javascript:void(0)" >微信支付</a>
+		</div>
+	</div>
+	<div class="mui-content mui-text-center mui-hidden by-noGoods" style="height:100%">
+		<div class="by-gwc-ktxt">
+			<h4 style="color:#929292">购物车快饿扁了T.T</h4>
+			<h5 style="color:#aeaeae">快给我挑点东西吧</h5>
+			<a href="javascript:void(0)">去逛逛</a>
+		</div>
+	</div>
+{{/block}}
+{{block name="js"}}
+<script type="text/javascript">
+//点击关闭支付弹窗
+function closePay(){
+    $('.by-pay-back').click(function(){
+        $('.by-pay-box').addClass('mui-hidden');
+    })
+}
+$(function() {
+    //支付弹框
+$('.by-total-btn').click(function () {
+    var url = $(this).data('url');
+    console.log(url);
+    // $(this).data('goodsid')+'-'+$(this).data('goodsprice')
+    var proid=[];
+    var pronum=[];
+    var proprice=[];
+    var offer = [];
+    $('.by-data-goodsid').each(function(index,value){
+    	proid[index] = $(this).data('goodsid');
+    	pronum[index] = $(this).data('pronum');
+    	proprice[index] = $(this).data('goodsprice');
+    	offer[index] = $(this).data('off');
+    });
+    console.log();
+    var endprice = Number($('.by-totaltj').text());
+    var addrid = $('.by-goods-address').data('addressid');
+    var param ={'addrid':addrid,'endprice':endprice,'offer':offer,'proid':proid,'pronum':pronum,'proprice':proprice};
+    $.post({
+    	url:url,
+    	data:{'data':JSON.stringify(param)},
+    	success:function(res){
+    		// console.log(res);
+    		if(res){
+    			$('.by-pay-box').removeClass('mui-hidden');
+			    $('.by-pay-box').css('height',$('body').innerHeight());
+			    $('.by-pay-back').css('height',$('.by-pay-box').height()-50);
+			    $('.by-pay-box').click(function(){
+			    	payment(res['id']);
+			    });
+    			mui.toast('订单已生成!请使用微信付款~');
+    		} else {
+    			mui.toast('系统繁忙请稍后查看订单');
+    		}
+    	}
+    });
+});
+
+closePay();
+    var total = Number($('[class="by-goodsshop"]').text()) + Number($('[class="by-goodsadress"]').text());
+    $('[class="by-totaltj"]').text(total);
+});
+
+	function payment(id){
+		$.post('{{:url("order/pay")}}', {id:id}, function(res){
+			if (res) {
+				callpay(res);
+			}
+		});
+	}
+	function jsApiCall(jsApiParameters)
+	{
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			jsApiParameters,
+			function(res){
+				WeixinJSBridge.log(res.err_msg);
+				alert(res.err_code+res.err_desc+res.err_msg);
+			}
+		);
+	}
+
+	function callpay(jsApiParameters)
+	{
+		if (typeof WeixinJSBridge == "undefined"){
+		    if( document.addEventListener ){
+		        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		    }else if (document.attachEvent){
+		        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+		        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		    }
+		}else{
+		    jsApiCall(jsApiParameters);
+		}
+	}
+</script>
+
+{{/block}}

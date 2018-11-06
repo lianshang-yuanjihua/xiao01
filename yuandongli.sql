@@ -96,15 +96,16 @@ select * from sq_address;
 
 insert into sq_address (consignee,address,mobile,remark,status,userid)values('Door','幻想乡新日暮里','12345678901','乖乖站好',1,1);
 
-
+drop table sq_order;
 create table `sq_order`( 
 `id` int key auto_increment,
 `uid` int not null comment '用户id',
 `addr_id` int comment '此订单送达地址id',
+`out_trade_on` varchar(255) not null comment'订单编号',
 `endprice`  varchar(20) comment '最终价格',
 `status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待发货，2：已发货，3：待确认收货，4：已完成'
 )char set utf8 engine InnoDB comment '订单表';
-
+drop table sq_orderproducts;
 create table `sq_orderproducts`(
 `id` int primary key auto_increment,
 `oid` int not null comment '订单id',

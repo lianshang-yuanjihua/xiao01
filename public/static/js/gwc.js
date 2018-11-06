@@ -138,7 +138,7 @@ $('.by-jz-btn').click(function() {
     //获取商品种类id
     var goodsId = [];
     $('.by-card-data').each(function(i, v) {
-        goodsId.push(v.dataset.id);
+        goodsId.push(v.dataset.carid);
     });
     // console.log(goodsId);
 
