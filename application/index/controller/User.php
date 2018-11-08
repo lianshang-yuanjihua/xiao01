@@ -25,7 +25,7 @@ class User extends IndexBase {
     public function login() {
         return $this->fetch();
     }
-
+    //登录
     public function doLogin() {
         $data  = input('post.');
         $rules = [
@@ -54,7 +54,7 @@ class User extends IndexBase {
             return;
         }
     }
-
+    //注册页面
     public function register() {
         $pid = input('param.pid');
         if ($pid) {
@@ -62,7 +62,7 @@ class User extends IndexBase {
         }
         return $this->fetch();
     }
-
+    //提交注册
     public function doRegister() {
         $data     = input('param.');
         $validate = validate('user');
@@ -100,6 +100,9 @@ class User extends IndexBase {
     }
     //地址列表
     public function addrlist() {
+        $id = session('userInfo.id');
+        $addr = model('address')->getAddrByID($id);
+        $this->assign('addr',$addr);
         return $this->fetch();
     }
     //新增地址

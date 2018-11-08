@@ -11,4 +11,8 @@ class Address extends Common {
             ->order('id desc')
             ->find();
     }
+
+    public function getAddrByID($id){
+        return $this->where('userid',$id)->select();
+    }
 }

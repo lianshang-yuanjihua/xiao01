@@ -20,10 +20,10 @@ class WxPayConfig {
      * 获取地址：https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&token=2005451881&lang=zh_CN
      * @var string
      */
-    const APPID     = 'wxd3bd38ad122348f5';
-    const MCHID     = '';
-    const KEY       = '';
-    const APPSECRET = '';
+    const APPID     = 'wx9712f0d6d6801c72';
+    const MCHID     = '1518416681';
+    const KEY       = 'F0368E6B2D7E6425965D59E07C831ABA';
+    const APPSECRET = 'a4e5255896edc8fba00f77cbb1dd5a2a';
 
     // ======【开发模式与生产模式】===================================
     /**
@@ -33,7 +33,7 @@ class WxPayConfig {
     const WXPAY_DEBUG = true;
 
     //=======【异步通知地址】=====================================
-    const NOTIFY_URL = 'http://' . $_SERVER[''] . 'payment';
+    const NOTIFY_URL = '';
 
     /*********************  以下配置不建议修改   *********************/
 

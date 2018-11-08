@@ -78,9 +78,9 @@ class Product extends AdminBase {
         $file      = request()->file();
         $productid = input('param.id');
         $res       = model('product')->where('id', $productid)->update($data);
-        echo "<pre>";
-        var_dump($this->checkEmpty($file));
-        exit;
+//        echo "<pre>";
+//        var_dump($this->checkEmpty($file));
+//        exit;
         if ($this->checkEmpty($file)) {
             $path    = ROOT_PATH . "public" . DS . "static" . DS . "upload";
             $success = 0;

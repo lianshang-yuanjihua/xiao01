@@ -12,7 +12,6 @@ create table if not exists `sq_user`(
 `path` varchar(255) default '--' comment '推荐关系链',
 `mobile` char(11) not null unique comment '用户手机号',
 `password` varchar(255) not null comment '密码',
-`paypwd` varchar(255) comment '支付密码',
 `nickname` varchar(255) not null comment '昵称',
 `icon` varchar(255) comment '头像',
 `sex` tinyint(1) default 1 comment '性别',
@@ -20,7 +19,7 @@ create table if not exists `sq_user`(
 `balance` double(15,3) not null default 0 comment '用户余额',
 `total_income` double(15,3) not null default 0 comment '用户总收入',
 `voucher` tinyint default 1 comment '代金券',
-`usertype` tinyint(1) default 1 comment'账户类型:0为普通会员,1为创业代理,2为都市代理',
+`usertype` tinyint(1) default 1 comment'账户类型:0为普通会员,9为超级管理员,8为普通管理员',
 `share` int default 0 comment '推荐分享套餐数量',
 `status`tinyint(1) default 1 comment'账户状态',
 `createtime` int unsigned comment '用户创建时间'
@@ -55,7 +54,6 @@ create table if not exists `sq_product` (
 `status` tinyint(1) default 1 comment '产品状态'
 ) engine=innodb default charset utf8 comment='产品表';
 
-insert into sq_product(title,price,num,content)values('源动力',670,5700,500,'产品说明');
 update sq_product set `status` = 2 where id=1;
 select * from sq_product;
 
@@ -89,7 +87,7 @@ create table `sq_address`(
 `zipcode` int(6) comment '邮政编码',
 `remark` varchar(50) comment '备注',
 `status` tinyint(1) default 0 comment '地址状态 0 为普通 1为默认',
-`userid` int comment '用户id'
+`userid` int not null comment '用户id'
 )char set utf8 engine InnoDB comment '地址表';
 
 select * from sq_address;
@@ -102,9 +100,14 @@ create table `sq_order`(
 `uid` int not null comment '用户id',
 `addr_id` int comment '此订单送达地址id',
 `out_trade_on` varchar(255) not null comment'订单编号',
-`endprice`  varchar(20) comment '最终价格',
-`status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待发货，2：已发货，3：待确认收货，4：已完成'
+`endprice` varchar(20) comment '最终价格',
+`type` tinyint(1) default 0 comment '订单类型,0为正常提成 1 为提成盒数-1',
+`transaction_id` char(32) comment '微信订单号',
+`status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待确认收货，2：已完成'
 )char set utf8 engine InnoDB comment '订单表';
+
+select * from sq_order;
+
 drop table sq_orderproducts;
 create table `sq_orderproducts`(
 `id` int primary key auto_increment,

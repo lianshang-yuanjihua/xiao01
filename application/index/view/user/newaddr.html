@@ -1,0 +1,81 @@
+{{extend name="public/base"/}}
+{{block name="title"}}设置{{/block}}
+{{block name="css"}}
+<link rel="stylesheet" type="text/css" href="__CSS__/newaddr.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/mui.picker.min.css" />
+{{/block}}
+{{block name="header"}}{{/block}}
+{{block name="main"}}
+<div class="mui-content" style="background-color:#fafafa">
+    <form class="mui-input-group by-register-form" action="{{:url('address/saveaddr')}}" method="post" id="form">
+        <div class="mui-input-row">
+            <label>收&nbsp;件&nbsp;人</label>
+            <input type="text" class="mui-input-clear mui-input" name="consignee" placeholder="收件人姓名" id="by-name">
+        </div>
+        <div class="mui-input-row">
+            <label>联系方式</label>
+            <input type="text" class="mui-input-clear mui-input" name="mobile" placeholder="手机号" id="by-phone">
+        </div>
+        <div class="mui-input-row">
+            <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编</label>
+            <input type="text" class="mui-input-clear mui-input" name="zipcode" id="by-code" placeholder="请输入邮政编码">
+        </div>
+        <div class="mui-input-row">
+            <label>所在地区</label>
+            <p style="height:40px;line-height:40px;margin:0;font-size: 17px;" id="showCityPicker3">点击选择地区</p>
+        </div>
+
+        <div class="mui-input-row" style="height:80px;">
+            <label>详细地址</label>
+            <textarea id="textarea" rows="2" name="remark" placeholder="请输入详细地址" style="height:80px;" class="mui-input-clear"></textarea>
+        </div>
+    </form>
+    <div class="mui-content-padded" id="submit">
+        <button class="mui-btn mui-btn-block" style="background-color:#f5ba4c;color:#fff;padding:0;border:none;border-radius:20px">确认</button>
+    </div>
+
+</div>
+{{/block}}
+{{block name="js"}}
+<script src="__JS__/mui.picker.min.js"></script>
+<script src="__JS__/city.data.js" type="text/javascript"></script>
+<script src="__JS__/city.data-3.js" type="text/javascript"></script>
+<script>
+    (function($, doc) {
+        // $.init();
+        $.ready(function() {
+            /**
+             * 获取对象属性的值
+             * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+             * @param {Object} obj 对象
+             * @param {String} param 属性名
+             */
+            var _getParam = function(obj, param) {
+                return obj[param] || '';
+            };
+
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker3');
+
+            showCityPickerButton.addEventListener('click', function(event) {
+                cityPicker3.show(function(items) {
+                    showCityPickerButton.innerText = _getParam(items[0], 'text') + '-' + _getParam(items[1], 'text') + '-' + _getParam(items[2], 'text');
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+    $(function () {
+        $('#submit').click(function () {
+            var input = $('<input type="text" name="address" />');
+            input.val($('#showCityPicker3').text());
+            $('#form').append(input);
+            $('#form').submit();
+        });
+    })
+</script>
+{{/block}}

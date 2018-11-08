@@ -23,13 +23,23 @@ class Order extends IndexBase {
     }
 
     public function order() {
+        $user = session('userInfo');
         $tmp                   = input('post.data');
         $data                  = json_decode($tmp, true);
         $order                 = [];
         $order['uid']          = session('userInfo.id');
         $order['addr_id']      = $data['addrid'];
-        $order['endprice']     = $data['endprice'];
+
         $order['out_trade_on'] = date('YmdHis') . rand(1000, 9999);
+        $voucher = $data['voucher'];
+        if ($voucher==1 && $user->voucher==1){
+            $order['endprice']     = $data['endprice'] - 500;
+            model('user')->where('id',$user->id)->update(['voucher'=>0]);
+            $user->voucher = 0;
+            session('userInfo',$user);
+        } else {
+            $order['endprice']     = $data['endprice'];
+        }
         $id                    = model('order')->insertGetId($order);
         if ($id) {
             $orderPro = [];
@@ -51,7 +61,9 @@ class Order extends IndexBase {
                 $orderPro[$i]['proprice'] = $proprice;
             }
             $res = model('orderproducts')->insertAll($orderPro);
+
             if ($res) {
+                model('cart')->where('userid',$user->id)->delete();
                 return ['total_fee' => $order['endprice'], 'id' => $id];
             }
             return false;
@@ -63,8 +75,8 @@ class Order extends IndexBase {
         $id             = input('post.id');
         $order          = model('order')->where('id', $id)->find();
         $params         = [];
-        $params['body'] = ' 源动力';
-        // $params['total_fee']    = $order['endprice'];
+        $params['body'] = '源动力';
+        // $params['total_fee']    = $order['endprice'] * 100;
         $params['total_fee']    = 1;
         $params['out_trade_on'] = $order['out_trade_on'];
         $jsApiParameters        = \wxpay\JsapiPay::getPayParams($params);

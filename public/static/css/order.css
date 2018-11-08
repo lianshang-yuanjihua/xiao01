@@ -216,3 +216,6 @@ body {
     margin-top: 10vw;
     margin-left: 10px;
 }
+.mui-checkbox input[type=checkbox]:checked:before {
+    color: #F5BA4C
+}

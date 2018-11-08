@@ -61,12 +61,14 @@ class Notify extends \WxPayNotify {
      * 处理核心业务
      * @param  array $order 订单信息
      * @param  array $data  通知数组
-     * @return Bollean
+     * @return Boolean
      */
     public function processOrder($order, $data) {
+
         // 进行核心业务处理, 如更新状态, 发送通知等等
         // 处理成功, 返回true, 处理失败, 返回false
         // 例如:
+
         $result = db('order')->where('id', $order['id'])->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
         return $result;
     }
@@ -87,8 +89,7 @@ class Notify extends \WxPayNotify {
 
     // 去本地服务器查询订单信息
     public function getOrder($data) {
-        // 可根据商户订单号进行查询
-        // 例如:
+
         $order = db('order')->where('out_trade_no', $data['out_trade_no'])->find();
         return $order;
     }
@@ -98,7 +99,7 @@ class Notify extends \WxPayNotify {
      * 原因: 可能由于业务处理较慢, 还未等回复微信服务器, 同一订单的另一个通知已到达,
      *      为了避免重复修改订单, 需要对状态进行检查
      *
-     * @return Bollean
+     * @return Boolean
      */
     public function checkOrderStatus($order) {
         // 检查还未修改, 则返回true, 检查已经修改过了, 则返回false

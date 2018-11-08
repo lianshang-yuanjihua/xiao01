@@ -36,10 +36,6 @@ class User extends Model {
         }
         return $clientNum;
     }
-    //获取地址
-    public function getAddr() {
-        return $this->hasMany('address', 'userid');
-    }
     //获取购物车
     public function getCart() {
         return $this->hasMany('cart', 'userid');
