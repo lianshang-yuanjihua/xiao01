@@ -46,7 +46,8 @@ class User extends IndexBase {
 
         if (session('userInfo')) {
             session('successMsg', '登录成功!');
-            $this->redirect('index/index');
+            $this->redirect($this->beforeUrl?:'index/index');
+            session('beforeurl',null);
             return;
         } else {
             session('errorMsg', '账号或者密码错误!');

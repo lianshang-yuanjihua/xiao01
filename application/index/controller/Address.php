@@ -31,4 +31,14 @@ class Address extends IndexBase {
         }
 
      }
+    public function selectaddr(){
+         $id = session('userInfo.id');
+         return model('address')->getAddrByID($id) ?: false;
+    }
+
+    public  function getaddr(){
+         $id = input('post.id');
+         $addr = model('address')->where('id',$id)->find();
+         return $addr;
+    }
 }

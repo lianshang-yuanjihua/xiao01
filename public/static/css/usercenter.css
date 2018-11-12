@@ -69,15 +69,6 @@ body {
     margin-left: 20px
 }
 
-.by-grzx-ye span:last-child:before {
-    content: '';
-    height: 20px;
-    background-color: #ccc;
-    position: relative;
-    border: 1px solid #fff;
-    position: absolute;
-    left: 48%;
-}
 
 .by-bage {
     position: absolute;

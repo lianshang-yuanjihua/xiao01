@@ -33,7 +33,7 @@ class WxPayConfig {
     const WXPAY_DEBUG = true;
 
     //=======【异步通知地址】=====================================
-    const NOTIFY_URL = '';
+    const NOTIFY_URL = 'http://www.ab.com:8088/payment';
 
     /*********************  以下配置不建议修改   *********************/
 

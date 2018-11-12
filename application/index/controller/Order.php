@@ -12,10 +12,6 @@ class Order extends IndexBase {
             $order['addr'] = model('address')->getAddr(session('userInfo.id'), 0);
         }
         $order['product'] = model('product')->getProductByID(implode(',', $data['id']), 'in');
-        // echo "<pre>";
-        // print_r(implode(',', $data['id']));
-        // print_r($data);
-        // print_r($order['product']);die;
         $order['totalprice'] = $data['totalprice'];
         $order['num']        = $data['num'];
         $this->assign('order', $order);
@@ -82,4 +78,5 @@ class Order extends IndexBase {
         $jsApiParameters        = \wxpay\JsapiPay::getPayParams($params);
         return $jsApiParameters;
     }
+
 }

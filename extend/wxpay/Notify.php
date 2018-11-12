@@ -64,13 +64,55 @@ class Notify extends \WxPayNotify {
      * @return Boolean
      */
     public function processOrder($order, $data) {
+            //检查支付是否成功
+//        if ($data['get_brand_wcpay_request'] == 'ok'){
+//            db('order')
+//                ->where('id', $order['id'])
+//                ->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
+//
+//            $user =session('userInfo');
+//            //查看该用户是否有上级
+//            if ($user->pid !=0){
+//                //有
+//                $pid1 = $user->pid;
+//                $puser = db('user')->where('id',$pid1)->find();
+//                $num = 0;//参与提成的商品数
+//                //查看该用户上级是否为代理商
+//                if ($puser->cloudwh != 0){
+//                    //是代理商则查看商品数量,检查是否使用代金券,扣除代理商云仓相应的存货并结算推荐奖励
+//                    $orderproducts = model('orderproducts')->where('oid',$order->id)->select();
+//                    foreach ($orderproducts as $detail){
+//                        $num += $detail->pronum;
+//                    }
+//                    $num -= $order->type;//减去使用的代金券
+//                    if ($num >0)
+//                    db('user')->where('id',$pid1)
+//                        ->dec('cloudwh',$num)
+//                        ->inc('balance',$num * 70)
+//                        ->update();
+//                } else{
+//                    if ($num >0)
+//                        db('user')->where('id',$pid1)->setInc('balance',$num * 70);
+//                }
+//                $tmp = trim($user->path,'--');
+//                $path = explode('--',$tmp);
+//
+//                //第二级
+//                if (count($path)>=2 && $num>0){
+//                    $pid2 = $path[array_search($pid1,$path)-1];
+//                    db('user')->where('id',$pid2)->setInc('balance',$num * 70);
+//                }
+//
+//            } else {
+//                //没有
+//
+//            }
+//
+//        } else {
+//            return false;
+//        }
+        return true;
 
-        // 进行核心业务处理, 如更新状态, 发送通知等等
-        // 处理成功, 返回true, 处理失败, 返回false
-        // 例如:
-
-        $result = db('order')->where('id', $order['id'])->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
-        return $result;
     }
 
     // 去微信服务器查询是否有此订单

@@ -22,4 +22,10 @@ class Index extends IndexBase {
     public function help() {
         return $this->fetch();
     }
+
+    public function test1(){
+        $path = '--a--';
+        $path = trim($path ,'--');
+        print_r(explode('--',$path));
+    }
 }

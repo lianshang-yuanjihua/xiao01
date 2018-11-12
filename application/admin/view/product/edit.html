@@ -27,6 +27,27 @@
       </div>
       <div class="layui-form-mid layui-word-aux">产品价格</div>
     </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">套装总价</label>
+          <div class="layui-input-inline">
+              <input type="text" name="suit" required lay-verify="required" value="{{$product.suit}}" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">一套产品多少钱</div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">一级代理优惠价</label>
+          <div class="layui-input-inline">
+              <input type="text" name="agent_1_price" required lay-verify="required" value="{{$product.agent_1_price}}" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">一级代理优惠价</div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">二级代理优惠价</label>
+          <div class="layui-input-inline">
+              <input type="text" name="agent_2_price" required lay-verify="required" value="{{$product.agent_2_price}}" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">二级代理优惠价</div>
+      </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品库存</label>
       <div class="layui-input-inline">
