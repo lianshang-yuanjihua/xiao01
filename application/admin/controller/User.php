@@ -63,23 +63,23 @@ class User extends AdminBase {
         $type   = input('param.del');
         $users  = [];
         if (!$type) {
-            $users['userlist'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+            $users['userlist'] = model('user')->where('mobile', 'like', '%' . $search . '%')
                 ->where('usertype', 'neq', 3)
                 ->where('usertype', 'lt', 8)
                 ->paginate(5, false, ['query' => request()->param()])->each(function ($value, $key) use ($search) {
-                $value->nickname = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->nickname);
+                $value->mobile = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->mobile);
             });
-            $users['userCount'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+            $users['userCount'] = model('user')->where('mobile', 'like', '%' . $search . '%')
                 ->where('usertype', 'lt', 8)
                 ->where('usertype', 'neq', 3)
                 ->count();
         } else {
-            $users['userlist'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+            $users['userlist'] = model('user')->where('mobile', 'like', '%' . $search . '%')
                 ->where('usertype', 'eq', 3)
                 ->paginate(5, false, ['query' => request()->param()])->each(function ($value, $key) use ($search) {
-                $value->nickname = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->nickname);
+                $value->mobile = str_replace($search, '<b style="color:#009688">' . $search . '</b>', $value->mobile);
             });
-            $users['userCount'] = model('user')->where('nickname', 'like', '%' . $search . '%')
+            $users['userCount'] = model('user')->where('mobile', 'like', '%' . $search . '%')
                 ->where('usertype', 'eq', 3)
                 ->count();
         }

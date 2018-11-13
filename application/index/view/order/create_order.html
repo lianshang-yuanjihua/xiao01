@@ -40,7 +40,7 @@
 
     {{volist name="$order['product']" id="vo"}}
     <div class="mui-card by-data-goodsid" data-off="{{$vo.offer|substr=0,-3}}"
-         data-goodsprice="{{$vo.price|substr=0,-3}}" data-goodsid="{{$vo.id}}" data-pronum="{{$order['num'][$i-1]}}">
+         data-goodsprice="{{$vo->{$type[$Think.session.userInfo.usertype]}|substr=0,-3}}" data-goodsid="{{$vo.id}}" data-pronum="{{$order['num'][$i-1]}}">
         <div class="by-gwc-fl" style="margin-top:4vw;margin-left:1vw;">
             {{foreach $vo->getImgs as $value}}
             {{if $value->type == 0}}
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <h5 class="by-gwcjs-jg">￥<span class="by-goodsprice">{{$vo->price|substr=0,-3}}</span>元/盒</h5>
+        <h5 class="by-gwcjs-jg">￥<span class="by-goodsprice">{{$vo->{$type[$Think.session.userInfo.usertype]}|substr=0,-3}}</span>元/盒</h5>
         <div class="by-dsh-b mui-pull-left" style="padding-right: 20px;">
             <p class="mui-text-right"><strong style="color:#ff3434;font-size:22px">x<span class="by-goodsnumber">{{$order['num'][$i-1]}}</span></strong>
             </p>
@@ -107,7 +107,6 @@
         <p>合计：<strong style="color:#ff3434;">￥<span class="by-totaltj"></span></strong>
             <a href="javascript:void(0)" data-url="{{:url('order/order')}}" class="mui-pull-right by-total-btn">提交订单</a>
         </p>
-
     </div>
 
 </div>
@@ -122,7 +121,6 @@
 <div class="by_popAddress_show mui-hidden">
     <div class="by-pay-item">
         <div class="by-pay-back">
-
         </div>
         <ul class="by_ul_adrress">
             <li class="newaddr">添加新地址</li>

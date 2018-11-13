@@ -13,14 +13,16 @@ Loader::import('wxpay.lib.WxPayNotify');
  *
  *
  */
-class Notify extends \WxPayNotify {
+class Notify extends \WxPayNotify
+{
     /**
      * 此为主函数, 即处理自己业务的函数, 重写后, 框架会自动调用
      *
      * @param array $data 微信传递过来的参数数组
      * @param string $msg 错误信息, 用于记录日志
      */
-    public function NotifyProcess($data, &$msg) {
+    public function NotifyProcess($data, &$msg)
+    {
         // 一下均为实例代码
         // 1.校检参数
         if (!array_key_exists("transaction_id", $data)) {
@@ -58,65 +60,93 @@ class Notify extends \WxPayNotify {
     }
 
     /**
-     * 处理核心业务
-     * @param  array $order 订单信息
-     * @param  array $data  通知数组
-     * @return Boolean
+     * @param $order 订单对象
+     * @param $data 通知对象
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
-    public function processOrder($order, $data) {
-            //检查支付是否成功
-//        if ($data['get_brand_wcpay_request'] == 'ok'){
-//            db('order')
-//                ->where('id', $order['id'])
-//                ->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
-//
-//            $user =session('userInfo');
-//            //查看该用户是否有上级
-//            if ($user->pid !=0){
-//                //有
-//                $pid1 = $user->pid;
-//                $puser = db('user')->where('id',$pid1)->find();
-//                $num = 0;//参与提成的商品数
-//                //查看该用户上级是否为代理商
-//                if ($puser->cloudwh != 0){
-//                    //是代理商则查看商品数量,检查是否使用代金券,扣除代理商云仓相应的存货并结算推荐奖励
-//                    $orderproducts = model('orderproducts')->where('oid',$order->id)->select();
-//                    foreach ($orderproducts as $detail){
-//                        $num += $detail->pronum;
-//                    }
-//                    $num -= $order->type;//减去使用的代金券
-//                    if ($num >0)
-//                    db('user')->where('id',$pid1)
-//                        ->dec('cloudwh',$num)
-//                        ->inc('balance',$num * 70)
-//                        ->update();
-//                } else{
-//                    if ($num >0)
-//                        db('user')->where('id',$pid1)->setInc('balance',$num * 70);
-//                }
-//                $tmp = trim($user->path,'--');
-//                $path = explode('--',$tmp);
-//
-//                //第二级
-//                if (count($path)>=2 && $num>0){
-//                    $pid2 = $path[array_search($pid1,$path)-1];
-//                    db('user')->where('id',$pid2)->setInc('balance',$num * 70);
-//                }
-//
-//            } else {
-//                //没有
-//
-//            }
-//
-//        } else {
-//            return false;
-//        }
-        return true;
+    public function processOrder($order, $data)
+    {
+        //检查支付是否成功
+        if ($data['get_brand_wcpay_request'] == 'ok') {
+            db('order')
+                ->where('id', $order['id'])
+                ->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
+
+            $user = session('userInfo');
+            //查看该用户是否有上级
+            if ($user->pid != 0) {
+                //有
+                $pid1 = $user->pid;
+                $puser = db('user')->where('id', $pid1)->find();
+                //查看该用户上级依据账户类型做处理
+                $num = 0;//商品提成数量;
+                $pros = db('orderproducts')->where('oid', $order['id'])->select();
+                foreach ($pros as $value) {
+                    $num += $value->pronum;
+                }
+                $num = $num - $order->voucher;
+                $re = $this->usertype($puser, $num);
+                if ($re) {
+                    if ($puser->pid != 0) {
+                        $puser2 = db('user')->where('id', $puser->pid)->find();
+                        return $this->usertype($puser2, $num);
+                    } else return true;
+                } else
+                    //用户类型不正确
+                    return false;
+            }
+        } else {
+            return false;
+        }
 
     }
 
+    /**
+     * @param $user
+     * @param $num
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function usertype($user, $num)
+    {
+        $balance = $user->balance;
+        $total_income = $user->total_income;
+        switch ($user->usertype) {
+            //普通用户
+            case 0:
+                $balance += $num * 70;
+                $total_income += $num * 70;
+                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
+                return true;
+                break;
+            //一级代理
+            case 1:
+                $balance += $num * 100;
+                $total_income += $num * 100;
+                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
+                return true;
+                break;
+            //二级代理
+            case 2:
+                $balance += $num * 100;
+                $total_income += $num * 100;
+                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
+                return true;
+                break;
+            default:
+                return false;
+        }
+    }
+
     // 去微信服务器查询是否有此订单
-    public function Queryorder($transaction_id) {
+    public function Queryorder($transaction_id)
+    {
         $input = new \WxPayOrderQuery();
         $input->SetTransaction_id($transaction_id);
         $result = \WxPayApi::orderQuery($input);
@@ -130,7 +160,8 @@ class Notify extends \WxPayNotify {
     }
 
     // 去本地服务器查询订单信息
-    public function getOrder($data) {
+    public function getOrder($data)
+    {
 
         $order = db('order')->where('out_trade_no', $data['out_trade_no'])->find();
         return $order;
@@ -143,7 +174,8 @@ class Notify extends \WxPayNotify {
      *
      * @return Boolean
      */
-    public function checkOrderStatus($order) {
+    public function checkOrderStatus($order)
+    {
         // 检查还未修改, 则返回true, 检查已经修改过了, 则返回false
         // 例如:
         return $order['status'] == 1 ? true : false;

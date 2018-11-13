@@ -33,6 +33,5 @@ class IndexBase extends Controller {
         session('beforeurl')&&
             $this->beforeUrl =session('beforeurl');
 
-
     }
 }

@@ -45,17 +45,18 @@ function checkAll() {
 //单价.signprice
 //数量.by-input-num
 function priceAll() {
+
     total = 0;
     for (var c = 0; c < $(".signprice").length; c++) {
         if ($($('.by-check')[c]).is(':checked')) {
             num = Number($('.by-input-num')[c].value);
             var price = Number($($('.signprice')[c]).text());
-            if (num >= 10) {
-                var off = Number($($('.by-input-num')[c]).data('off'));
-                total += num % 10 * price;
-                total += parseInt(num / 10) * off;
+            var suit = Number($($('.signprice')[c]).data('suit'));
+            if (num % 10 == 0) {
+                total += num / 10 * suit;
             } else {
-                total += num * price;
+                total += num % 10 * price;
+                total += Math.floor(num / 10) * suit;
             }
         }
     }

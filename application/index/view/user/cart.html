@@ -5,81 +5,85 @@
 {{/block}}
 {{block name="header"}}
 <a class=" mui-icon mui-icon-trash mui-pull-right by-remove-btn" data-url='{{:url("cart/del")}}' style="color:#fff"></a>
-		<a class=" mui-icon mui-icon-checkmarkempty mui-pull-right by-remove-succes mui-hidden" style="color:#fff"></a>
+<a class=" mui-icon mui-icon-checkmarkempty mui-pull-right by-remove-succes mui-hidden" style="color:#fff"></a>
 {{/block}}
 {{block name="main"}}
 
 {{include file="public/nav"}}
 
 <div class="mui-content" style="background-color:#fafafa;margin-bottom:50px;">
-			{{volist name="carts" id="vo"}}
-			<div class="mui-card by-card-data" data-carid="{{$vo.productid}}">
-			<div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
-				<div class="mui-input-row mui-checkbox mui-left  by-check-goods">
-					<label style="padding-left: 40px;">&nbsp;</label>
-					<input name="checkbox" value="Item 1" type="checkbox" class="by-check by-check0" checked />
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left by-remove-goods mui-hidden">
-					<a class=" mui-icon mui-icon-trash" style="color:red;margin-left:20px;font-size:36px"></a>
-				</div>
-			</div>
-			<div class="by-gwc-fl" style="margin-top:8vw">
-		<img {{foreach $vo->getProduct->getImgs as $img}} {{if $img.type eq 0}} src="__STATIC__/upload/{{$img.path}}" {{/if}} {{/foreach}} style="width: 50px;height:80px;" />
-			</div>
-			<div class="by-gwc-fl" style="width:65%;float:right">
-				<div class="mui-card by-card" style="box-shadow: none;">
-
-					<div class="mui-card-content">
-						<div class="mui-card-content-inner" style="padding:0 5px;">
-							<p>
-								<h4 style="text-align: center;">{{$vo->getProduct->title}}</h4>
-							</p>
-							<p style="font-weight:bold;color: #9b9b9b;padding:0 10px; font-size: 12px;">{{$vo->getProduct->content|mb_substr=0,12}}...</p>
-						</div>
-					</div>
-					<div class="mui-card-footer">
-						<a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303" class="price0 signprice">{{$vo->getProduct->price|mb_substr=0,-3}}</text>元/盒</span></a>
-						<div class="mui-numbox" style="width:110px;height:25px">
-							<button class="mui-btn mui-btn-numbox-minus by-btn-reduce" type="button">-</button>
-							<input class="mui-input-numbox by-input-num" data-off="{{$vo->getProduct->offer}}" type="number" value="{{$vo.num}}" />
-							<button class="mui-btn mui-btn-numbox-plus by-btn-add" type="button">+</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		{{/volist}}
-		<div class="by-jz">
-					<div style="width: 40%;float:left">
-						<div class="mui-input-row mui-checkbox mui-left">
-							<label>全选</label>
-							<input name="checkbox" value="Item 2" type="checkbox" checked style="top:9px;" id="by-checkAll">
-						</div>
-					</div>
-			 		<div class="by=jz-rt" style="width: 60%;float:left;color:#a7a7a7">
-						合计：<text style="color:#ff0303" id="by-hj"></text>
-						<a href="javascript:void(0)" data-url="{{:url('order/createOrder')}}" class="by-jz-btn">结算</a>
-					</div>
-				</div>	
-	<div class="mui-content mui-text-center mui-hidden by-noGoods" style="height:100%">	
-		<div class="by-gwc-ktxt">
-			<h4 style="color:#929292">购物车快饿扁了T.T</h4>
-			<h5 style="color:#aeaeae">快给我挑点东西吧</h5>
-			<a href="javascript:void(0)">去逛逛</a>
-		</div>
-	</div>
-{{/block}}
-{{block name="js"}}
-<script type="text/javascript" src="__JS__/gwc.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$('.mui-input-numbox').change(function(){
-			if($(this).val() <=1){
-				$(this).val(1);
-				$(this).prev().attr('disabled',true);
-			}
-			priceAll(); 
-		});
-	});
-</script>
-{{/block}}
+    {{volist name="carts" id="vo"}}
+    <div class="mui-card by-card-data" data-carid="{{$vo.productid}}">
+        <div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
+            <div class="mui-input-row mui-checkbox mui-left  by-check-goods">
+                <label style="padding-left: 40px;">&nbsp;</label>
+                <input name="checkbox" value="Item 1" type="checkbox" class="by-check by-check0" checked/>
+            </div>
+            <div class="mui-input-row mui-checkbox mui-left by-remove-goods mui-hidden">
+                <a class=" mui-icon mui-icon-trash" style="color:red;margin-left:20px;font-size:36px"></a>
+            </div>
+        </div>
+        <div class="by-gwc-fl" style="margin-top:8vw">
+            <img {{foreach $vo->getProduct->getImgs as $img}} {{if $img.type eq 0}}
+            src="__STATIC__/upload/{{$img.path}}" {{/if}} {{/foreach}} style="width: 50px;height:80px;" />
+        </div>
+        <div class="by-gwc-fl" style="width:65%;float:right">
+            <div class="mui-card by-card" style="box-shadow: none;">
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner" style="padding:0 5px;">
+                        <p>
+                        <h4 style="text-align: center;">{{$vo->getProduct->title}}</h4>
+                        </p>
+                        <p style="font-weight:bold;color: #9b9b9b;padding:0 10px; font-size: 12px;">
+                            {{$vo->getProduct->content|mb_substr=0,12}}...</p>
+                    </div>
+                </div>
+                <div class="mui-card-footer">
+                    <a class="mui-card-link"><span style="color:#727272"><text style="color:#ff0303" data-suit="{{$vo->getProduct->suit}}"
+                                                                               class="price0 signprice">{{$vo->getProduct->price|mb_substr=0,-3}}</text>元/盒</span></a>
+                    <div class="mui-numbox" style="width:110px;height:25px">
+                        <button class="mui-btn mui-btn-numbox-minus by-btn-reduce" type="button">-</button>
+                        <input class="mui-input-numbox by-input-num"  type="number" data-utype="{{$Think.session.userInfo.voucher}}"
+                               value="{{$vo.num}}"/>
+                        <button class="mui-btn mui-btn-numbox-plus by-btn-add" type="button">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/volist}}
+    <div class="by-jz">
+        <div style="width: 40%;float:left">
+            <div class="mui-input-row mui-checkbox mui-left">
+                <label>全选</label>
+                <input name="checkbox" value="Item 2" type="checkbox" checked style="top:9px;" id="by-checkAll">
+            </div>
+        </div>
+        <div class="by=jz-rt" style="width: 60%;float:left;color:#a7a7a7">
+            合计：
+            <text style="color:#ff0303" id="by-hj"></text>
+            <a href="javascript:void(0)" data-url="{{:url('order/createOrder')}}" class="by-jz-btn">结算</a>
+        </div>
+    </div>
+    <div class="mui-content mui-text-center mui-hidden by-noGoods" style="height:100%">
+        <div class="by-gwc-ktxt">
+            <h4 style="color:#929292">购物车快饿扁了T.T</h4>
+            <h5 style="color:#aeaeae">快给我挑点东西吧</h5>
+            <a href="javascript:void(0)">去逛逛</a>
+        </div>
+    </div>
+    {{/block}}
+    {{block name="js"}}
+    <script type="text/javascript" src="__JS__/gwc.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.mui-input-numbox').change(function () {
+                if ($(this).val() <= 1) {
+                    $(this).val(1);
+                    $(this).prev().attr('disabled', true);
+                }
+                priceAll();
+            });
+        });
+    </script>
+    {{/block}}

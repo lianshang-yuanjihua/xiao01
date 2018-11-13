@@ -14,7 +14,9 @@ class Order extends IndexBase {
         $order['product'] = model('product')->getProductByID(implode(',', $data['id']), 'in');
         $order['totalprice'] = $data['totalprice'];
         $order['num']        = $data['num'];
-        $this->assign('order', $order);
+
+        $type = ['0'=>'price','1'=>'agent_1_price','2'=>'agent_2_price'];
+        $this->assign(['order'=> $order,'type'=>$type]);
         return $this->fetch();
     }
 

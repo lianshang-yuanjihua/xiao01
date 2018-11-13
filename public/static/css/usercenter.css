@@ -58,6 +58,15 @@ body {
     padding: 10px 0;
     color: #fff;
 }
+.by-grzx-ye span:last-child:before {
+    content: '';
+    height: 20px;
+    background-color: #ccc;
+    position: relative;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 48%;
+}
 
 .by-grzx-ye span:first-child {
     display: inline-block;
@@ -73,5 +82,5 @@ body {
 .by-bage {
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 20%;
 }

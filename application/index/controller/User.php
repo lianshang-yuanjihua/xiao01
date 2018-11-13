@@ -10,7 +10,27 @@ class User extends IndexBase {
     public function usercenter() {
         $clientNum = model('user')
             ->clientNum(session('userInfo.id'));
-        $this->assign('clientNum', $clientNum);
+        $user = model('user')->where('id',session('userInfo.id'))->find();
+        $order_data = [];
+        $orders = model('order')->where('uid',$user->id)->select();
+        $order_data['obl']=0;//待付款
+        $order_data['toget']=0;//待收货
+        $order_data['finished']=0;//已完成
+        foreach ($orders as $value){
+            switch ($value->status){
+                case 0:
+                    $order_data['obl'] += 1;
+                    break;
+                case 1:
+                    $order_data['toget'] +=1;
+                    break;
+                case 2:
+                    $order_data['finished']+=1;
+                    break;
+                default:
+            }
+        }
+        $this->assign(['clientNum'=> $clientNum,'order_data'=>$order_data,'user'=>$user]);
         return $this->fetch();
     }
 
@@ -18,7 +38,8 @@ class User extends IndexBase {
     public function cart() {
         $id    = session('userInfo.id');
         $carts = model('cart')->where('userid', $id)->select();
-        $this->assign('carts', $carts);
+        $type = ['0'=>'price','1'=>'agent_1_price','2'=>'agent_2_price'];
+        $this->assign(['carts'=> $carts,'type'=>$type]);
         return $this->fetch();
     }
 
@@ -36,7 +57,11 @@ class User extends IndexBase {
         if ($validate->check($data)) {
             $userInfo = model('user')->checkLogin($data);
             if ($userInfo) {
+                if ($userInfo->usertype<=2)
                 session("userInfo", $userInfo);
+                else
+                    session('errorMsg','此账号不能登录')
+                    && $this->redirect('user/login');
             }
         } else {
             session('errorMsg', $validate->getError());

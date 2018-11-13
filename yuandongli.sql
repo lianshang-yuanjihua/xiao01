@@ -16,33 +16,35 @@ create table if not exists `sq_user`(
 `icon` varchar(255) comment '头像',
 `sex` tinyint(1) default 1 comment '性别',
 `balance` double(15,3) not null default 0 comment '用户余额',
-`total_income` double(15,3) not null default 0 comment '用户总收入',
-`voucher` tinyint default 1 comment '代金券',
+`cloud` double(15,3) not null default 0 comment '云仓余额',
+`total_income` double(16,2) not null default 0 comment '用户总收入',
+`voucher` tinyint default 1 comment '试用产品次数',
 `usertype` tinyint(1) default 1 comment'账户类型:0为普通会员,1为一级代理 2为二级代理 9为超级管理员,8为普通管理员',
 `share` int default 0 comment '推荐分享套餐数量',
-`status`tinyint(1) default 1 comment'账户状态',
+`status`tinyint(1) default 1 comment'账户状态 1为正常 , 0为冻结',
 `createtime` int unsigned comment '用户创建时间'
 )char set utf8 engine InnoDB comment '用户表';
 
-insert into sq_user(`mobile`,`password`,`nickname`,`createtime`,`usertype`)values(12345678901,'e10adc3949ba59abbe56e057f20f883e','Door',unix_timestamp(),9);
+insert into sq_user(`mobile`,`password`,`nickname`,`createtime`,`usertype`)values('12345678901','e10adc3949ba59abbe56e057f20f883e','Door',unix_timestamp(),1);
+
+insert into sq_user(`mobile`,`password`,`nickname`,`createtime`,`usertype`)values('22345678901','e10adc3949ba59abbe56e057f20f883e','NextDoor',unix_timestamp(),9);
 
 drop table if exists sq_product;
 
 create table if not exists `sq_product` (
 `id` int unsigned not null primary key auto_increment comment '主键',
 `title` varchar(255) not null comment '产品名称',
-`price` decimal(16,2) not null comment '普通会员购买价格',
-`suit` decimal(16,2) not null comment '普通会员套装购买价格',
-`agent_1_price` decimal(16,2) not null comment '一级代理购买优惠',
-`agent_2_price` decimal(16,2) not null comment '二级代理购买优惠',
-`offer` decimal(16,2) not null comment '优惠券优惠价格',
+`price` decimal(16,2) not null comment '会员购买价格',
+`suit` decimal(16,2) not null comment '会员套装购买价格',
+`agent_price` decimal(16,2) not null comment '代理云仓优惠金额',
+`reward` decimal(16,2) not null comment '代理推荐代理奖励',
+`offer` decimal(16,2) not null comment '产品试用购买价',
 `num` int(11) default 0 comment '库存数量',
 `sellnum` int(11) default 0 comment '销售数量',
 `content` text comment '产品描述简介',
 `status` tinyint(1) default 1 comment '产品状态'
 ) engine=innodb default charset utf8 comment='产品表';
 
-update sq_product set `status` = 2 where id=1;
 select * from sq_product;
 
 drop table if exists sq_productimg;
@@ -101,7 +103,7 @@ drop table sq_orderproducts;
 create table `sq_orderproducts`(
 `id` int primary key auto_increment,
 `oid` int not null comment '订单id',
-`proid` int not null comment '产品id',
+`proid` int not null comment '产品id',	
 `pronum` int not null comment '商品数量',
 `proprice` decimal(16,2) not null comment '价格'
 )char set utf8 engine InnoDB comment '订单商品表';
