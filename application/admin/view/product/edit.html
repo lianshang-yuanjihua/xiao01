@@ -34,20 +34,22 @@
           </div>
           <div class="layui-form-mid layui-word-aux">一套产品多少钱</div>
       </div>
+
       <div class="layui-form-item">
-          <label class="layui-form-label">代理云仓优惠金额</label>
+          <label class="layui-form-label">一级代理云仓价</label>
           <div class="layui-input-inline">
-              <input type="text" name="agent_price" required lay-verify="required" value="{{$product.agent_price}}" autocomplete="off" class="layui-input">
+              <input type="text" name="agent_1_price" required lay-verify="required" value="{{$product.agent_price}}" autocomplete="off" class="layui-input">
           </div>
-          <div class="layui-form-mid layui-word-aux">每级代理优惠的价格,例如:一级70 ,二级140</div>
+          <div class="layui-form-mid layui-word-aux">一级代理云仓价</div>
       </div>
       <div class="layui-form-item">
-          <label class="layui-form-label">代理推荐代理奖励</label>
+          <label class="layui-form-label">二级代理云仓价</label>
           <div class="layui-input-inline">
-              <input type="text" name="reward" required lay-verify="required" value="{{$product.reward}}" autocomplete="off" class="layui-input">
+              <input type="text" name="agent_2_price" required lay-verify="required" value="{{$product.agent_price}}" autocomplete="off" class="layui-input">
           </div>
-          <div class="layui-form-mid layui-word-aux">代理推荐代理奖励</div>
+          <div class="layui-form-mid layui-word-aux">二级代理云仓价</div>
       </div>
+
     <div class="layui-form-item">
       <label class="layui-form-label">产品库存</label>
       <div class="layui-input-inline">

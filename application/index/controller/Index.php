@@ -24,8 +24,11 @@ class Index extends IndexBase {
     }
 
     public function test1(){
-        $path = '--a--';
-        $path = trim($path ,'--');
-        print_r(explode('--',$path));
+        $orders = model('order')->select();
+        rsort($orders);
+        echo '<pre>';
+        foreach ($orders as $v){
+            print_r($v);
+        }
     }
 }

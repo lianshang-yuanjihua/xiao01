@@ -6,7 +6,9 @@ class Order extends IndexBase {
     public function createOrder() {
         $data          = input('post.');
         $order         = [];
-        $pro           = [];
+        $id = session('userInfo.id');
+        $user = model('user')->where('id',$id)->find();
+        session('userInfo',$user);
         $order['addr'] = model('address')->getAddr(session('userInfo.id'), 1);
         if (empty($order['addr'])) {
             $order['addr'] = model('address')->getAddr(session('userInfo.id'), 0);
@@ -15,8 +17,7 @@ class Order extends IndexBase {
         $order['totalprice'] = $data['totalprice'];
         $order['num']        = $data['num'];
 
-        $type = ['0'=>'price','1'=>'agent_1_price','2'=>'agent_2_price'];
-        $this->assign(['order'=> $order,'type'=>$type]);
+        $this->assign('order', $order);
         return $this->fetch();
     }
 
@@ -30,8 +31,8 @@ class Order extends IndexBase {
 
         $order['out_trade_on'] = date('YmdHis') . rand(1000, 9999);
         $voucher = $data['voucher'];
-        if ($voucher==1 && $user->voucher==1){
-            $order['endprice']     = $data['endprice'] - 500;
+        if ($voucher==1 && $user->voucher==500){
+            $order['endprice']     = $data['endprice'] - $user->voucher;
             model('user')->where('id',$user->id)->update(['voucher'=>0]);
             $user->voucher = 0;
             session('userInfo',$user);
@@ -43,7 +44,7 @@ class Order extends IndexBase {
             $orderPro = [];
             $proid    = $data['proid'];
             $pronum   = $data['pronum'];
-            $offer    = $data['offer'];
+            $suit    = $data['suit'];
             $price    = $data['proprice'];
             for ($i = 0; $i < count($proid); $i++) {
                 $orderPro[$i]['oid']    = $id;
@@ -51,7 +52,7 @@ class Order extends IndexBase {
                 $orderPro[$i]['pronum'] = $pronum[$i];
                 $proprice               = 0;
                 if ($pronum[$i] >= 10) {
-                    $proprice = floor($pronum[$i] / 10) * $offer[$i];
+                    $proprice = floor($pronum[$i] / 10) * $suit[$i];
                     $proprice += $pronum[$i] % 10 * $price[$i];
                 } else {
                     $proprice = $pronum[$i] % 10 * $price[$i];
@@ -59,7 +60,6 @@ class Order extends IndexBase {
                 $orderPro[$i]['proprice'] = $proprice;
             }
             $res = model('orderproducts')->insertAll($orderPro);
-
             if ($res) {
                 model('cart')->where('userid',$user->id)->delete();
                 return ['total_fee' => $order['endprice'], 'id' => $id];

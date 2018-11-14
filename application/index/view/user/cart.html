@@ -14,10 +14,11 @@
 <div class="mui-content" style="background-color:#fafafa;margin-bottom:50px;">
     {{volist name="carts" id="vo"}}
     <div class="mui-card by-card-data" data-carid="{{$vo.productid}}">
+
         <div class="by-gwc-fl" style="height:100px ;margin-top:14vw;margin-left:-10px">
             <div class="mui-input-row mui-checkbox mui-left  by-check-goods">
                 <label style="padding-left: 40px;">&nbsp;</label>
-                <input name="checkbox" value="Item 1" type="checkbox" class="by-check by-check0" checked/>
+                <input name="checkbox" value="Item 1" type="checkbox" class="by-check" checked/>
             </div>
             <div class="mui-input-row mui-checkbox mui-left by-remove-goods mui-hidden">
                 <a class=" mui-icon mui-icon-trash" style="color:red;margin-left:20px;font-size:36px"></a>
@@ -84,6 +85,18 @@
                 }
                 priceAll();
             });
+
+            $('.by-check,#by-checkAll').change(function () {
+                var flag=0;
+                $('.by-check').each(function () {
+                    this.checked && flag++;
+                });
+                if (flag == 0){
+                    $('.by-jz-btn').addClass('mui-hidden');
+                } else {
+                    $('.by-jz-btn').removeClass('mui-hidden');
+                }
+            })
         });
     </script>
     {{/block}}

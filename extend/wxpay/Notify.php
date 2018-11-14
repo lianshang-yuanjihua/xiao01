@@ -2,6 +2,7 @@
 
 namespace wxpay;
 
+use app\index\model\Orderproducts;
 use think\Loader;
 
 require_once 'lib/WxPayException.php';
@@ -79,27 +80,125 @@ class Notify extends \WxPayNotify
 
             $user = session('userInfo');
             //查看该用户是否有上级
-            if ($user->pid != 0) {
-                //有
-                $pid1 = $user->pid;
-                $puser = db('user')->where('id', $pid1)->find();
-                //查看该用户上级依据账户类型做处理
-                $num = 0;//商品提成数量;
-                $pros = db('orderproducts')->where('oid', $order['id'])->select();
-                foreach ($pros as $value) {
-                    $num += $value->pronum;
+            $path = explode('--', trim($user->path, '--'));
+            //有上级
+            if (!empty($path)) {
+                $team = db('user')->where('id', 'in', $path)->select();
+                $orderproducts = db('orderproducts')->where('oid', $order->id)->select();
+                $num = 0;
+                foreach ($orderproducts as $va) {
+                    $num += $va->pronum;
                 }
-                $num = $num - $order->voucher;
-                $re = $this->usertype($puser, $num);
-                if ($re) {
-                    if ($puser->pid != 0) {
-                        $puser2 = db('user')->where('id', $puser->pid)->find();
-                        return $this->usertype($puser2, $num);
-                    } else return true;
-                } else
-                    //用户类型不正确
-                    return false;
+                $num -= $order->voucher;
+                rsort($team);
+                $share = 2;//分享推荐奖励次数
+                $reward = 0; //代理推荐代理奖励/如果直推上级与购买者不是代理,则没有奖励
+                foreach ($team as $value) {
+                    if ($share <= 0 && $reward <= 0) {
+                        break;
+                    }
+                    //直推上级
+                    if ($value->id == $user->pid) {
+
+                        switch ($value->usertype) {
+                            case 0://普通会员
+                                $value->balance += $value->agent_price * $num;
+                                $value->total_income += $value->agent_price * $num;
+                                db('user')->where('id', $value->id)->update($value);
+                                break;
+                            case 1://1级代理
+                                $sell = 0;
+                                //购买商品的用户是一级或二级代理
+                                if ($user->usertype > 0 && $user->usertype <= 2) {
+                                    $sell = ($value->agent_price + $value->reward) * $num;
+                                    $reward = 1;
+                                } else {
+                                    //不是代理
+                                    $sell = $value->agent_price * $num;
+                                }
+                                $befbalance = $value->balance;
+                                $befcloud = $value->cloud;
+                                $value->balance += $sell;
+                                $value->total_income += $sell;
+
+                                for ($i = $order->voucher; $i < count($orderproducts); $i++) {
+                                    $product = db('product')->where('id', $orderproducts[$i]->proid)->find();
+                                    if ($value->cloud - $product->agent_1_price >= 0) {
+                                        $value->cloud -= $product->agent_1_price;
+                                        $value->balance += $product->price;
+                                    }
+                                }
+                                db('user')->where('id', $value->id)->update($value);
+                                $aftbalance = $value->balance;
+                                $aftcloud = $value->cloud;
+                                $this->appLog($value->id, $aftbalance, $befbalance,$aftcloud,$befcloud);
+                                break;
+                            case 2://二级代理
+                                $sell = 0;
+                                //购买商品的用户是一级或二级代理
+                                if ($user->usertype > 0 && $user->usertype <= 2) {
+                                    $sell = ($value->agent_price + $value->reward) * $num;
+                                    $reward = 1;
+                                } else {
+                                    //不是代理
+                                    $sell = $value->agent_price * $num;
+                                }
+                                $befbalance = $value->balance;
+                                $befcloud = $value->cloud;
+                                $value->balance += $sell;
+                                $value->total_income += $sell;
+                                for ($i = $order->voucher; $i < count($orderproducts); $i++) {
+                                    $product = db('product')->where('id', $orderproducts[$i]->proid)->find();
+                                    if ($value->cloud - $product->agent_2_price >= 0) {
+                                        $value->cloud -= $product->agent_2_price;
+                                        $value->balance += $product->price;
+                                    }
+                                }
+                                db('user')->where('id', $value->id)->update($value);
+                                $aftbalance = $value->balance;
+                                $aftcloud = $value->cloud;
+                                $this->appLog($value->id, $aftbalance, $befbalance,$aftcloud,$befcloud);
+                                break;
+                        }
+                        $share--;
+                    } else {
+                        if ($value->usertype >= 1 && $value->usertype <= 2) {
+                            $sell = 0;
+                            if ($reward > 0) {
+                                $reward--;
+                                $sell += $value->reward * $num;
+                                if ($share > 0) {
+                                    $sell += $value->agent_price * $num;
+                                    $share--;
+                                }
+                                $befbalance = $value->balance;
+                                $befcloud = $value->cloud;
+                                $value->balance += $sell;
+                                $value->total_income += $sell;
+                                db('user')->where('id', $value->id)->update($value);
+                                $aftbalance = $value->balance;
+                                $aftcloud = $value->cloud;
+                                $this->appLog($value->id, $aftbalance, $befbalance,$aftcloud,$befcloud);
+                            }
+                        } else {
+                            $sell = 0;
+                            if ($share > 0) {
+                                $share--;
+                                $sell += $value->agent_price * $num;
+                                $befbalance = $value->balance;
+                                $befcloud = $value->cloud;
+                                $value->balance += $sell;
+                                $value->total_income += $sell;
+                                db('user')->where('id', $value->id)->update($value);
+                                $aftbalance = $value->balance;
+                                $aftcloud = $value->cloud;
+                                $this->appLog($value->id, $aftbalance, $befbalance,$aftcloud,$befcloud);
+                            }
+                        }
+                    }
+                }
             }
+            return true;
         } else {
             return false;
         }
@@ -107,41 +206,28 @@ class Notify extends \WxPayNotify
     }
 
     /**
-     * @param $user
-     * @param $num
-     * @return bool
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * @param $id 用户id
+     * @param $aftbalance 交易后余额
+     * @param $befbalance 交易前余额
+     * @param $aftcloud 交易后云仓
+     * @param $befcloud 交易前云仓
      */
-    public function usertype($user, $num)
+    public function appLog($id, $aftbalance, $befbalance, $aftcloud, $befcloud)
     {
-        $balance = $user->balance;
-        $total_income = $user->total_income;
-        switch ($user->usertype) {
-            //普通用户
-            case 0:
-                $balance += $num * 70;
-                $total_income += $num * 70;
-                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
-                return true;
-                break;
-            //一级代理
-            case 1:
-                $balance += $num * 100;
-                $total_income += $num * 100;
-                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
-                return true;
-                break;
-            //二级代理
-            case 2:
-                $balance += $num * 100;
-                $total_income += $num * 100;
-                db('user')->where('id', $user->id)->update(['balance' => $balance, 'total_income' => $total_income]);
-                return true;
-                break;
-            default:
-                return false;
-        }
+        $balog = [];
+        $balog['uid'] = $id;
+        $balog['time'] = time();
+        $balog['amount'] = $aftbalance - $befbalance;
+        $balog['balance'] = $aftbalance;
+        $balog['remarks'] = 'app交易';
+        db('balancelog')->insert($balog);
+        $yclog = [];
+        $yclog['uid'] = $id;
+        $yclog['time'] = time();
+        $yclog['amount'] = $aftcloud - $befcloud;
+        $yclog['cloud'] = $aftcloud;
+        $yclog['remarks'] = 'app交易';
+        db('yclog')->insert($yclog);
     }
 
     // 去微信服务器查询是否有此订单

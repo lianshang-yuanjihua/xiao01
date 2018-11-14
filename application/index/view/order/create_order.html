@@ -39,8 +39,8 @@
     </ul>
 
     {{volist name="$order['product']" id="vo"}}
-    <div class="mui-card by-data-goodsid" data-off="{{$vo.offer|substr=0,-3}}"
-         data-goodsprice="{{$vo->{$type[$Think.session.userInfo.usertype]}|substr=0,-3}}" data-goodsid="{{$vo.id}}" data-pronum="{{$order['num'][$i-1]}}">
+    <div class="mui-card by-data-goodsid" data-suit="{{$vo.suit}}"
+         data-goodsprice="{{$vo->price}}" data-goodsid="{{$vo.id}}" data-pronum="{{$order['num'][$i-1]}}">
         <div class="by-gwc-fl" style="margin-top:4vw;margin-left:1vw;">
             {{foreach $vo->getImgs as $value}}
             {{if $value->type == 0}}
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <h5 class="by-gwcjs-jg">￥<span class="by-goodsprice">{{$vo->{$type[$Think.session.userInfo.usertype]}|substr=0,-3}}</span>元/盒</h5>
+        <h5 class="by-gwcjs-jg">￥<span class="by-goodsprice">{{$vo->price|substr=0,-3}}</span>元/盒</h5>
         <div class="by-dsh-b mui-pull-left" style="padding-right: 20px;">
             <p class="mui-text-right"><strong style="color:#ff3434;font-size:22px">x<span class="by-goodsnumber">{{$order['num'][$i-1]}}</span></strong>
             </p>
@@ -152,12 +152,12 @@
             var proid = [];
             var pronum = [];
             var proprice = [];
-            var offer = [];
+            var suit = [];
             $('.by-data-goodsid').each(function (index, value) {
                 proid[index] = $(this).data('goodsid');
                 pronum[index] = $(this).data('pronum');
                 proprice[index] = $(this).data('goodsprice');
-                offer[index] = $(this).data('off');
+                suit[index] = $(this).data('suit');
             });
             var endprice = Number($('.by-totaltj').attr('data-end'));
             var voucher = $('[name="checkbox1"]').prop('checked') ? 1 : 0;
@@ -165,7 +165,7 @@
             var param = {
                 'addrid': addrid,
                 'endprice': endprice,
-                'offer': offer,
+                'suit': suit,
                 'voucher': voucher,
                 'proid': proid,
                 'pronum': pronum,

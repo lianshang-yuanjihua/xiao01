@@ -23,6 +23,17 @@ class Cart extends IndexBase {
         }
     }
 
+    public function buy(){
+        $proid = input('param.id');
+        $cart =[];
+        $cart['productid'] = $proid;
+        $cart['userid'] = session('userInfo.id');
+        $cart['num'] = 1;
+        $cart['created'] = time();
+        model('cart')->insert($cart);
+        $this->redirect('user/cart');
+    }
+
     public function del() {
         $id = input('param.id');
         return model('cart')->delByID($id);

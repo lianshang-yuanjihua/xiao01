@@ -14,18 +14,6 @@ $("body").on("change", ".mui-input-numbox", function() {
     priceAll();
 })
 
-//按钮减且赋值到价格
-// $("body").on("click", ".by-btn-reduce", function() {
-//     // console.log($(this).next().val());
-//     if ($(this).next('.by-input-num').val() <= 1) {
-//         $(this).attr('disabled', 'true');
-//         $(this).next('.by-input-num').val(1);
-//         priceAll();
-//         // var remove = window.confirm('确定要删除商品？');
-//         // if(remove) $(this).parents('.mui-card').remove();
-//     };
-// })
-//全选按钮
 function checkAll() {
     $('#by-checkAll').change(function() {
         //      console.log($(this)[0].checked);
@@ -45,7 +33,6 @@ function checkAll() {
 //单价.signprice
 //数量.by-input-num
 function priceAll() {
-
     total = 0;
     for (var c = 0; c < $(".signprice").length; c++) {
         if ($($('.by-check')[c]).is(':checked')) {
