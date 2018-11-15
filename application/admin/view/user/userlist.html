@@ -13,10 +13,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" action="{{:url('user/search')}}">
-          <input class="layui-input" disabled placeholder="开始日" name="start" id="start">
-          <input class="layui-input" disabled placeholder="截止日" name="end" id="end">
-          <input type="text" name="keywords"  placeholder="请输入手机号" value="{{$keywords ?: ''}}" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so" action="{{:url('user/search')}}" method="get">
+          <!--<input class="layui-input" disabled placeholder="开始日" name="start" id="start">-->
+          <!--<input class="layui-input" disabled placeholder="截止日" name="end" id="end">-->
+          查找用户: <input type="text" name="keywords"  placeholder="请输入手机号" value="{{$keywords ?: ''}}" autocomplete="off" class="layui-input">
           <button class="layui-btn"  type="submit" ><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -54,8 +54,11 @@
               <span class="layui-btn layui-btn-normal layui-btn-mini">正常</span>
             </td>
             <td class="td-manage">
-              <a title="查看"  onclick="x_admin_show('查看','order-view.html')" href="javascript:;">
+              <a title="查看"  onclick="x_admin_show('查看','{{:url('user/show',['id'=>$user.id])}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
+              </a>
+              <a href="javascript:;" title="充值" onclick="x_admin_show('充值','{{:url('user/charge',['id'=>$user.id])}}')" >
+                <i class="layui-icon">&#xe65e;</i>
               </a>
               <a title="删除" onclick="member_del(this,'{{$user['id']}}')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>

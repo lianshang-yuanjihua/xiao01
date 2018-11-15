@@ -25,7 +25,7 @@
                 {{if $order['addr']}}
                 <div>
                     收货人 <span class="by-Customer">{{$order['addr']->consignee}}</span> <span class="by-Customer-phone">13541872222</span>
-                    <p class='mui-ellipsis'>收货地址：<span class="by-goods-address" data-addressid="$order['addr']->id">{{:mb_substr($order['addr']->address,mb_strrpos($order['addr']->address,'-')+1)}} {{$order['addr']->remark}}</span></p>
+                    <p class='mui-ellipsis'>收货地址：<span class="by-goods-address" data-addressid="{{$order['addr']->id}}">{{:mb_substr($order['addr']->address,mb_strrpos($order['addr']->address,'-')+1)}} {{$order['addr']->remark}}</span></p>
                 </div>
                 {{else /}}
                 <div class="" style="padding-left:20px;color:#cf3a3a;">

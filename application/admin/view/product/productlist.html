@@ -12,14 +12,14 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" action="{{:url('product/search')}}">
-          <input class="layui-input" disabled placeholder="开始日" name="start" id="start">
-          <input class="layui-input" disabled placeholder="截止日" name="end" id="end">
-          <input type="text" name="keywords"  placeholder="请输入用户名" value="{{$keywords ?: ''}}" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  type="submit" ><i class="layui-icon">&#xe615;</i></button>
-        </form>
-      </div>
+      <!--<div class="layui-row">-->
+        <!--<form class="layui-form layui-col-md12 x-so" action="{{:url('product/search')}}">-->
+          <!--<input class="layui-input" disabled placeholder="开始日" name="start" id="start">-->
+          <!--<input class="layui-input" disabled placeholder="截止日" name="end" id="end">-->
+          <!--<input type="text" name="keywords"  placeholder="请输入用户名" value="{{$keywords ?: ''}}" autocomplete="off" class="layui-input">-->
+          <!--<button class="layui-btn"  type="submit" ><i class="layui-icon">&#xe615;</i></button>-->
+        <!--</form>-->
+      <!--</div>-->
       <xblock>
        <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
         <button class="layui-btn" onclick="x_admin_show('添加产品','{{:url('product/add')}}',600,400)"><i class="layui-icon"></i>添加</button> 

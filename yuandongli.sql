@@ -22,7 +22,6 @@ create table if not exists `sq_user`(
 `usertype` tinyint(1) default 1 comment'账户类型:0为普通会员,1为一级代理 2为二级代理 9为超级管理员,8为普通管理员',
 `agent_price` decimal(16,2) not null default 70 comment '推荐基础奖励',
 `reward` decimal(16,2) not null default 30 comment '代理推荐代理奖励',
-`share` int default 0 comment '推荐分享套餐数量',
 `status`tinyint(1) default 1 comment'账户状态 1为正常 , 0为冻结',
 `createtime` int unsigned comment '用户创建时间'
 )char set utf8 engine InnoDB comment '用户表';
@@ -92,6 +91,7 @@ create table `sq_order`(
 `endprice` varchar(20) comment '最终价格',
 `voucher` tinyint(1) default 0 comment '代金券的使用,0为正常提成 1 为提成盒数-1',
 `type` tinyint(1) default 0 comment '订单类型,0为普通购买,1 为创业代理,2 为都市代理',
+`created` int default 0 comment '订单生成时间',
 `transaction_id` char(32) comment '微信订单号',
 `status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待确认收货，2：已完成'
 )char set utf8 engine InnoDB comment '订单表';

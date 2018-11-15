@@ -52,6 +52,19 @@ class User extends AdminBase {
 
     }
 
+    public function show(){
+        $id = input('param.id');
+        $user = model('user')->where('id',$id)->find();
+        if ($user){
+            $this->assign('user',$user);
+            return $this->fetch();
+        } else {
+            session('errorMsg','未找到用户');
+            $this->redirect('userlist');
+        }
+
+    }
+
     //后台删除用户
     public function del() {
         $userid = input('post.id');
@@ -95,4 +108,15 @@ class User extends AdminBase {
         return $this->fetch();
     }
 
+    public function charge(){
+        if (request()->isPost()){
+            $data  = input('post.');
+
+        } else{
+            $id = input('param.id');
+            $user = model('user')->where('id',$id)->find();
+            $this->assign('user',$user);
+            return $this->fetch();
+        }
+    }
 }

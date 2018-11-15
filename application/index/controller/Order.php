@@ -39,6 +39,7 @@ class Order extends IndexBase {
         } else {
             $order['endprice']     = $data['endprice'];
         }
+        $order['created'] = time();
         $id                    = model('order')->insertGetId($order);
         if ($id) {
             $orderPro = [];

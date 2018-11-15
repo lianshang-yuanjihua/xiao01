@@ -1,0 +1,61 @@
+{{extend name="public/base"}}
+{{block name="main"}}
+<div class="x-nav">
+
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" action="{{:url('order/search')}}" method="get">
+            <!--<input class="layui-input" placeholder="开始日" name="start" id="start">-->
+            <!--<input class="layui-input" placeholder="截止日" name="end" id="end">-->
+            订单查询 : <input type="text" name="keyword" value="{{$keyword?:''}}"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
+            <button class="layui-btn"  type="submit"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <xblock>
+        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
+        <!--<button class="layui-btn" onclick="x_admin_show('添加用户','./admin-add.html')"><i class="layui-icon"></i>添加</button>-->
+        <span class="x-right" style="line-height:40px">共有数据：{{$listData['count']}} 条</span>
+    </xblock>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>ID</th>
+            <th>用户</th>
+            <th>地址</th>
+            <th>订单号</th>
+            <th>订单金额</th>
+            <th>订单状态</th>
+            <th>订单生成日期</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+        {{volist name="listData['order']" id="vo"}}
+        <tr>
+            <td>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{$vo.id}}'><i class="layui-icon">&#xe605;</i></div>
+            </td>
+            <td>{{$vo.id}}</td>
+            <td>{{$vo.uid}}</td>
+            <td>{{$vo.addr_id}}</td>
+            <td>{{$vo.out_trade_on}}</td>
+            <td>{{$vo.endprice}}</td>
+            <td class="td-status">
+                <span class="layui-btn layui-btn-normal layui-btn-mini">{{$orderType[$vo.status]}}</span></td>
+            <td>{{$vo.created}}</td>
+            <td class="td-manage">
+            </td>
+        </tr>
+        {{/volist}}
+        </tbody>
+    </table>
+    <div class="pagediv">
+    {{$listData['order']->render()}}
+    </div>
+</div>
+{{/block}}

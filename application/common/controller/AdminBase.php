@@ -22,6 +22,7 @@ class AdminBase extends Controller {
 
     public function _initialize() {
         // echo "后台控制器初始化";
+
     }
 
 }

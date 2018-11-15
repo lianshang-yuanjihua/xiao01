@@ -1,0 +1,35 @@
+{{extend name="public/base"}}
+{{block name="main"}}
+
+<div class="container">
+<table class="layui-table" lay-size="lg" lay-skin="line">
+    <thead>
+    <tr>
+        <th>昵称</th>
+        <th>ID</th>
+        <th>手机号</th>
+        <th>余额</th>
+        <th>云仓</th>
+        <th>总收入</th>
+        <th>试用代金券</th>
+        <th>用户类型</th>
+        <th>账号状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{$user.nickname}}</td>
+        <td>{{$user.id}}</td>
+        <td>{{$user.mobile}}</td>
+        <td>{{$user.balance}}</td>
+        <td>{{$user.cloud}}</td>
+        <td>{{$user.total_income}}</td>
+        <td>{{$user.voucher?:'无'}}</td>
+        <td>{{$user.usertype}}</td>
+        <td>{{$user.status}}</td>
+
+    </tr>
+    </tbody>
+</table>
+</div>
+{{/block}}

@@ -70,6 +70,7 @@ function noGoods() {
     // console.log($(".signprice").length);
     if ($(".signprice").length == 0) {
         $('.by-content').addClass("mui-hidden");
+        $('.by-jz').addClass('mui-hidden');
         $('.by-noGoods').removeClass("mui-hidden");
     }
 }
