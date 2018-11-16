@@ -49,14 +49,31 @@ class User extends AdminBase {
         return $this->fetch();
     }
     public function edit() {
-
+        if (!request()->isPost()){
+            $id = input('param.id');
+            $user = model('user')->where('id',$id)->find();
+            $this->assign(['user'=>$user]);
+            return $this->fetch();
+        } else {
+            $data = input('post.');
+            $id = $data['userid'];
+            unset($data['userid']);
+            $res = model('user')->where('id',$id)->update($data);
+            if ($res){
+                session('successMsgg','修改成功');
+            } else {
+                session('errorMsgg','系统繁忙');
+            }
+            $this->redirect('user/show',['id'=>$id]);
+        }
     }
 
     public function show(){
         $id = input('param.id');
         $user = model('user')->where('id',$id)->find();
         if ($user){
-            $this->assign('user',$user);
+            $usertype=[0=>'普通会员',1=>'创业代理',2=>'都市代理'];
+            $this->assign(['user'=>$user,'usertype'=>$usertype]);
             return $this->fetch();
         } else {
             session('errorMsg','未找到用户');
@@ -108,15 +125,48 @@ class User extends AdminBase {
         return $this->fetch();
     }
 
-    public function charge(){
+    public function userCharge(){
         if (request()->isPost()){
             $data  = input('post.');
-
+            $res = model('user')
+                ->where('id',$data['userid'])
+                ->inc('cloud',$data['cloud'])
+                ->exp('usertype',$data['usertype'])
+                ->update();
+            if ($res){
+                session('successMsg','充值成功');
+            } else {
+                session('errorMsg','系统繁忙');
+            }
+            $this->redirect('user/show',['id'=>$data['userid']]);
         } else{
             $id = input('param.id');
             $user = model('user')->where('id',$id)->find();
             $this->assign('user',$user);
             return $this->fetch();
+        }
+    }
+
+    public function adminList(){
+        $adminList = [];
+        $adminList['admin'] = model('user')
+            ->where('usertype', 'gt', 7)
+            ->paginate(10);
+        $adminList['count'] = model('user')
+            ->where('usertype', 'gt', 7)
+            ->count();
+        $type=[8=>'普通管理员',9=>'超级管理员'];
+        $this->assign(['adminList'=>$adminList,'type'=>$type]);
+        return $this->fetch();
+    }
+    public function adminEdit(){
+        if (request()->isPost()){
+
+        } else {
+          $id = input('param.id');
+          $admin = model('user')->where('id',$id)->find();
+          $this->assign('admin',$admin);
+          return $this->fetch();
         }
     }
 }

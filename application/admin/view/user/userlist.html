@@ -57,9 +57,12 @@
               <a title="查看"  onclick="x_admin_show('查看','{{:url('user/show',['id'=>$user.id])}}')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-              <a href="javascript:;" title="充值" onclick="x_admin_show('充值','{{:url('user/charge',['id'=>$user.id])}}')" >
+              <a href="javascript:;" title="充值" onclick="x_admin_show('充值','{{:url('user/userCharge',['id'=>$user.id])}}')" >
                 <i class="layui-icon">&#xe65e;</i>
               </a>
+              <a href="javascript:;" title="修改" onclick="x_admin_show('用户信息修改','{{:url('user/edit',['id'=>$user.id])}}')" >
+                              <i class="layui-icon">&#xe631;</i>
+                            </a>
               <a title="删除" onclick="member_del(this,'{{$user['id']}}')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>

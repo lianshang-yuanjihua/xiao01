@@ -1,0 +1,72 @@
+{{extend name="public/base"}}
+{{block name="main"}}
+<fieldset class="layui-elem-field" style="margin: 10px;">
+  <legend>用户信息修改</legend>
+  <div class="layui-field-box">
+<form class="layui-form" action="{{:url('user/edit')}}" method="post">
+  <div class="layui-form-item">
+      <label class="layui-form-label">用户ID :</label>
+      <div class="layui-input-inline">
+        <div class="layui-form-mid">{{$user.id}}</div>
+        <input type="hidden" name="userid" value="{{$user.id}}">
+      </div>
+          <div class="layui-form-mid layui-word-aux">用户唯一ID</div>
+    </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">用户昵称 :</label>
+          <div class="layui-input-inline">
+            <input type="text" name="nickname" required lay-verify="required" value="{{$user.nickname}}" placeholder="修改昵称" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">昵称修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户余额 :</label>
+        <div class="layui-input-inline">
+            <input type="text" name="balance" required lay-verify="required" value="{{$user.balance}}" placeholder="修改余额" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">余额修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户云仓 :</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cloud" required lay-verify="required" value="{{$user.cloud}}" placeholder="修改云仓" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">云仓修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">推荐奖励 :</label>
+        <div class="layui-input-inline">
+            <input type="text" name="agent_price" required lay-verify="required" value="{{$user.agent_price}}" placeholder="修改推荐奖励" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">推荐修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">代理推荐 :</label>
+        <div class="layui-input-inline">
+            <input type="text" name="reward" required lay-verify="required" value="{{$user.reward}}" placeholder="修改代理推荐奖励" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">代理推荐代理奖励</div>
+    </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">代理等级 :</label>
+    <div class="layui-input-block">
+      <select name="usertype" lay-verify="required">
+        <option value=""></option>
+        <option {{$user.usertype==0?'selected':''}} value="0">普通会员</option>
+        <option {{$user.usertype==1?'selected':''}} value="1">创业代理</option>
+        <option {{$user.usertype==2?'selected':''}} value="2">都市代理</option>
+        <option {{$user.usertype==3?'selected':''}} value="3">....</option>
+        <option {{$user.usertype==4?'selected':''}} value="4">....</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" type="submit">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+</div>
+</fieldset>
+{{/block}}

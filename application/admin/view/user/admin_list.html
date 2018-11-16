@@ -1,0 +1,77 @@
+{{extend name="public/base"}}
+{{block name="main"}}
+<!-- 右侧主体开始 -->
+    <div class="x-nav">
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <xblock>
+        <span class="x-right" style="line-height:40px">共有数据：{{$adminList['count']}} 条</span>
+      </xblock>
+      <table class="layui-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>ID</th>
+            <th>昵称</th>
+            <th>性别</th>
+            <th>手机</th>
+            <th>创建时间</th>
+            <th>管理员类型</th>
+            <th>操作</th></tr>
+        </thead>
+        <tbody>
+          {{volist name="adminList['admin']" id="user"}}
+          <tr>
+            <td>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{$user["id"]}}'><i class="layui-icon">&#xe605;</i></div>
+            </td>
+            <td>{{$user['id']}}</td>
+            <td>{{$user.nickname}}</td>
+            <td>{{$user.sex ? '男':'女'}}</td>
+            <td>{{$user.mobile}}</td>
+            <td>{{$user.createtime}}</td>
+            <td class="td-status">
+              <span class="layui-btn layui-btn-normal layui-btn-mini">{{$type[$user.usertype]}}</span>
+            </td>
+            <td class="td-manage">
+              <a href="javascript:;" title="修改" onclick="x_admin_show('用户信息修改','{{:url('user/adminEdit',['id'=>$user.id])}}')" >
+                              <i class="layui-icon">&#xe631;</i>
+                            </a>
+              <a title="删除" onclick="member_del(this,'{{$user['id']}}')" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
+              </a>
+            </td>
+          </tr>
+          {{/volist}}
+        </tbody>
+      </table>
+      <div class="page">
+        {{$adminList['admin']->render()}}
+      </div>
+    </div>
+    <script>
+      /*用户-删除*/
+      function member_del(obj,id){
+          layer.confirm('确认要删除吗？',function(){
+            $.ajax({
+              type:'post',
+              url:"{{:url('user/del')}}",
+              data:{'id':id},
+              success:function (res){
+               if(res>0){
+                $(obj).parents("tr").remove();
+                layer.msg('已删除!',{icon:1,time:1000});
+               } else {
+                layer.msg('删除失败!',{icon:2,time:1000});
+               }
+              } 
+            });
+          });
+      }
+    </script>
+    <!-- 右侧主体结束 -->
+{{/block}}
