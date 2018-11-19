@@ -110,14 +110,6 @@
     </div>
 
 </div>
-<div class="by-pay-box mui-hidden">
-    <div class="by-pay-item">
-        <div class="by-pay-back">
-
-        </div>
-        <a href="javascript:void(0)">微信支付</a>
-    </div>
-</div>
 <div class="by_popAddress_show mui-hidden">
     <div class="by-pay-item">
         <div class="by-pay-back">
@@ -147,6 +139,7 @@
     $(function () {
         //支付弹框
         $('.by-total-btn').click(function () {
+            $(this).addClass('mui-hidden');
             var url = $(this).data('url');
             console.log(url);
             var proid = [];
@@ -175,14 +168,10 @@
                 url: url,
                 data: {'data': JSON.stringify(param)},
                 success: function (res) {
+                    alert(res);
                     // console.log(res);
                     if (res) {
-                        $('.by-pay-box').removeClass('mui-hidden');
-                        $('.by-pay-box').css('height', $('body').innerHeight());
-                        $('.by-pay-back').css('height', $('.by-pay-box').height() - 50);
-                        $('.by-pay-box').click(function () {
-                            payment(res['id']);
-                        });
+                        callpay(res);
                         mui.toast('订单已生成!请使用微信付款~');
                     } else {
                         mui.toast('系统繁忙请稍后查看订单');
@@ -193,15 +182,11 @@
 
         closePay();
         var total = Number($('[class="by-goodsshop"]').text()) + Number($('[class="by-goodsadress"]').text());
-        $('[class="by-totaltj"]').attr('data-end', total);
-        $('[class="by-totaltj"]').text(total);
-
-
+        $('.by-totaltj').attr('data-end', total);
+        $('.by-totaltj').text(total);
         $('.newaddr').click(function () {
-            location.href="{{:url('user/addrlist')}}";
+            location.href="{{:url('address/addrlist')}}";
         });
-
-
         ////地址选择
         function popAddress(){
             $('.by_popAddress_box').click(function(){
@@ -239,20 +224,12 @@
 
     $('[name="checkbox1"]').change(function () {
         if ($(this).prop('checked')) {
-            $('[class="by-totaltj"]').text($('[class="by-totaltj"]').text() - 500);
+            $('.by-totaltj').text($('.by-totaltj').text() - 500);
         } else {
             $('[class="by-totaltj"]').text(Number($('[class="by-totaltj"]').text()) + 500);
         }
         console.log(this);
     });
-
-    function payment(id) {
-        $.post('{{:url("order/pay")}}', {id: id}, function (res) {
-            if (res) {
-                callpay(res);
-            }
-        });
-    }
 
     function jsApiCall(jsApiParameters) {
         WeixinJSBridge.invoke(

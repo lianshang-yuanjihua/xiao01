@@ -34,8 +34,7 @@
             <th>ID</th>
             <th>产品名称</th>
             <th>产品价格</th>
-            <th>库存数量</th>
-            <th>已售数量</th>
+            <th>套装价格</th>
             <th>产品描述</th>
             <th>状态</th> 
             <th>操作</th></tr>
@@ -49,8 +48,7 @@
             <td>{{$pro['id']}}</td>
             <td>{{$pro.title}}</td>
             <td>{{$pro.price}}</td>
-            <td>{{$pro.num}}</td>
-            <td>{{$pro.sellnum}}</td>
+            <td>{{$pro.suit}}</td>
             <td>{{$pro.content}}</td>
             <td class="td-status">
               <span class="layui-btn layui-btn-normal layui-btn-mini">{{$pro.status?"正常":"已下架"}}</span>

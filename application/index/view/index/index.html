@@ -1,12 +1,7 @@
 {{extend name="public/base"/}}
-{{block name="title"}}
-源动力
-{{/block}}
-{{block name="header"}}
-<a class=" mui-icon mui-icon-more mui-pull-right" style="color:#fff"></a>
-{{/block}}
+{{block name="title"}}源动力{{/block}}
 {{block name="css"}}
-	<link rel="stylesheet" type="text/css" href="__CSS__/index.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/index.css">
 {{/block}}
 {{block name="main"}}
 {{include file="public/nav"}}
@@ -19,7 +14,7 @@
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="javascript:void(0)">
 							{{if !empty($img.slideimg[count($img.slideimg)-1]->path)}}
-							<img src="__STATIC__/upload/{{$img.slideimg[count($img.slideimg)-1]->path}}" />
+							<img src="/static/upload/{{$img.slideimg[count($img.slideimg)-1]->path}}" />
 							{{/if}}
 						</a>
 					</div>	
@@ -27,7 +22,7 @@
 					<!-- 第{{$i}}张 -->
 					<div class="mui-slider-item">
 						<a href="javascript:void(0)">
-							<img src="__STATIC__/upload/{{$src.path}}">
+							<img src="/static/upload/{{$src.path}}">
 						</a>
 					</div>
 					{{/volist}}
@@ -36,7 +31,7 @@
 					<!-- 额外增加的最后一个节点 -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="javascript:void(0)">
-							<img src="__STATIC__/upload/{{$src.path}}">
+							<img src="/static/upload/{{$src.path}}">
 						</a>
 					</div>
 					{{/if}}
@@ -51,13 +46,13 @@
 			<div class="mui-card by-card" style="box-shadow: none;">
 				<div class=" mui-card-media" style="height:65vw;">
 					{{if !empty($img['cartimg'][0])}}
-					<img src="__STATIC__/upload/{{$img['cartimg'][0]->path}}" style="height: 100%">
+					<img src="/static/upload/{{$img['cartimg'][0]->path}}" style="height: 100%">
 					{{/if}}
 				</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner" style="padding:0 5px;">
 						<p><h3  style="text-align: center;">{{$product.title}}</h3></p>
-						<p style="color: #9b9b9b;padding:0 10px;">详情：/ <?php echo $_SERVER['SERVER_NAME']?> /{{$product.content|mb_substr=0,42}} ...</p>
+						<p style="color: #9b9b9b;padding:0 10px;">详情： {{$product.content|mb_substr=0,42}} ...</p>
 					</div>
 				</div>
 				<div class="mui-card-footer">

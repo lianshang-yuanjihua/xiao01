@@ -63,7 +63,13 @@ class Order extends IndexBase {
             $res = model('orderproducts')->insertAll($orderPro);
             if ($res) {
                 model('cart')->where('userid',$user->id)->delete();
-                return ['total_fee' => $order['endprice'], 'id' => $id];
+                $params         = [];
+                $params['body'] = '源动力';
+                // $params['total_fee']    = $order['endprice'] * 100;
+                $params['total_fee']    = 1;
+                $params['out_trade_on'] = $order['out_trade_on'];
+                $jsApiParameters        = \wxpay\JsapiPay::getPayParams($params);
+                return $jsApiParameters;
             }
             return false;
         } else {
