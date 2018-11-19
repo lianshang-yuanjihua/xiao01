@@ -68,24 +68,13 @@ class Order extends IndexBase {
                 // $params['total_fee']    = $order['endprice'] * 100;
                 $params['total_fee']    = 1;
                 $params['out_trade_on'] = $order['out_trade_on'];
-                $jsApiParameters        = \wxpay\JsapiPay::getPayParams($params);
+                $jsApiParameters        = '';// \wxpay\JsapiPay::getPayParams($params);
                 return $jsApiParameters;
             }
             return false;
         } else {
             return false;
         }
-    }
-    public function pay() {
-        $id             = input('post.id');
-        $order          = model('order')->where('id', $id)->find();
-        $params         = [];
-        $params['body'] = '源动力';
-        // $params['total_fee']    = $order['endprice'] * 100;
-        $params['total_fee']    = 1;
-        $params['out_trade_on'] = $order['out_trade_on'];
-        $jsApiParameters        = \wxpay\JsapiPay::getPayParams($params);
-        return $jsApiParameters;
     }
 
 }
