@@ -20,14 +20,14 @@
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
                         <nav class="mui-bar-tab by-car-tab">
-                            <a class="mui-tab-item order" data-url="{{:url('order/obl')}}" style="position:relative">
+                            <a class="mui-tab-item order" data-url="{{:url('order/obligations')}}" style="position:relative">
                                 {{if $order_data['obl']}}
                                 <span class="mui-badge mui-badge-red  by-bage">{{$order_data['obl']}}</span>
                                 {{/if}}
                                 <span class="mui-icon mui-icon-extra mui-icon-extra-dictionary "></span>
                                 <span class="mui-tab-label">待付款</span>
                             </a>
-                            <a class="mui-tab-item order" data-url="{{:url('order/toGet')}}" style="position:relative">
+                            <a class="mui-tab-item order" data-url="{{:url('order/order')}}" style="position:relative">
                                 {{if $order_data['toget']}}
                                 <span class="mui-badge mui-badge-red  by-bage">$order_data['toget']</span>
                                 {{/if}}

@@ -10,6 +10,8 @@
  * @author widy
  *
  */
+use think\Loader;
+Loader::import('wxpay.lib.WxPayConfig');
 class WxPayJsPay
 {
 	/**
@@ -42,7 +44,8 @@ class WxPayJsPay
 		//通过code获得openid
 		if (empty($code)){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+            $str = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$baseUrl = urlencode($str);//.$_SERVER['QUERY_STRING']
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 			Header("Location: $url");
 			exit();

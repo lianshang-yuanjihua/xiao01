@@ -415,15 +415,15 @@ class WxPayApi
 	{
 		try {
             //获取通知的数据
+            $xml = file_get_contents("php://input");
+            if (!$xml)
             $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-
             //如果返回成功则验证签名
             $result = WxPayResults::Init($xml);
 		} catch (WxPayException $e){
 			$msg = $e->errorMessage();
 			return false;
 		}
-
 		return call_user_func($callback, $result);
 	}
 

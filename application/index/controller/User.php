@@ -21,10 +21,10 @@ class User extends IndexBase {
                 case 0:
                     $order_data['obl'] += 1;
                     break;
-                case 1:
+                case 2:
                     $order_data['toget'] +=1;
                     break;
-                case 2:
+                case 3:
                     $order_data['finished']+=1;
                     break;
                 default:
@@ -135,7 +135,6 @@ class User extends IndexBase {
     public function newaddr() {
         return $this->fetch();
     }
-
     //代理商客户列表
     public function clientlist() {
         $id      = session('userInfo.id');
@@ -148,4 +147,19 @@ class User extends IndexBase {
         $this->assign(['clients' => $clients, 'type' => $type]);
         return $this->fetch();
     }
+
+
+    public function order(){
+        return $this->fetch();
+    }
+
+    public function obligations(){
+        return $this->fetch();
+    }
+
+    public function orderDone(){
+        return $this->fetch();
+    }
+
+
 }

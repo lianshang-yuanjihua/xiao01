@@ -15,6 +15,17 @@ Class Order extends Common{
         return $listData;
     }
 
+    public function getOrderListByStatus($page,$status){
+        $listData = [];
+        $listData['order'] = $this->where('uid','neq','null')
+            ->where('status',$status)
+            ->paginate($page);
+        $listData['count'] = $this->where('uid','neq','null')
+            ->where('status',$status)
+            ->count();
+        return $listData;
+    }
+
     public function  getUser(){
         return $this->hasOne('user','id','uid');
     }

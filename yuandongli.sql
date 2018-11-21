@@ -38,7 +38,7 @@ create table if not exists `sq_product` (
 `suit` decimal(16,2) not null comment '会员套装购买价格',
 `agent_1_price` decimal(16,2) not null comment '1级代理云仓优惠价',
 `agent_2_price` decimal(16,2) not null comment '2级代理云仓优惠价',
-`reward` decimal(16,2) not null default 30 comment '代理推荐代理奖励',
+`inventory` int not null comment '库存',
 `content` text comment '产品描述简介',
 `status` tinyint(1) default 1 comment '产品状态'
 ) engine=innodb default charset utf8 comment='产品表';
@@ -87,13 +87,13 @@ create table `sq_order`(
 `id` int key auto_increment,
 `uid` int not null comment '用户id',
 `addr_id` int comment '此订单送达地址id',
-`out_trade_on` varchar(255) not null comment'订单编号',
+`out_trade_no` varchar(255) not null comment'订单编号',
 `endprice` varchar(20) comment '最终价格',
 `voucher` tinyint(1) default 0 comment '代金券的使用,0为正常提成 1 为提成盒数-1',
 `type` tinyint(1) default 0 comment '订单类型,0为普通购买,1 为创业代理,2 为都市代理',
 `created` int default 0 comment '订单生成时间',
 `transaction_id` char(32) comment '微信订单号',
-`status` tinyint(1) default 0 comment'订单状态：0：待付款，1：待确认收货，2：已完成'
+`status` tinyint(1) default 0 comment'订单状态：0：待付款，1：已付款，2：已处理发货 3: 已完成'
 )char set utf8 engine InnoDB comment '订单表';
 
 select * from sq_order;
@@ -117,7 +117,19 @@ create table if not exists `sq_yclog`(
 `cloud` int not null comment '云仓交易后余额',
 `remarks` varchar(255) not null comment '交易备注'
 )char set utf8 engine InnoDB comment '云仓交易日志表';
+
 drop table if exists sq_selllog;
+create table if not exists `sq_selllog`(
+`id` int key auto_increment comment '主键',
+`uid` int not null default 0 comment '用户ID',
+`proid` int not null default 0 comment '产品ID',
+`time` int not null comment '日志生成时间',
+`type` tinyint(1) not null comment '交易类型',
+`amount` double(15,3) not null comment '交易数量',
+`product` double(15,3) not null comment '交易后剩余',
+`remarks` varchar(255) not null comment '交易备注'
+)char set utf8 engine InnoDB comment '产品销售日志表';
+
 drop table if exists sq_balancelog;
 create table if not exists `sq_balancelog`(
 `id` int key auto_increment comment '主键',

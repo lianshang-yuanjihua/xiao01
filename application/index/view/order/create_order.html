@@ -164,18 +164,20 @@
                 'pronum': pronum,
                 'proprice': proprice
             };
-            $.post({
+            $.ajax({
+                type:'post',
                 url: url,
                 data: {'data': JSON.stringify(param)},
                 success: function (res) {
-                    alert(res);
-                    // console.log(res);
-                    if (res) {
-                        callpay(res);
-                        mui.toast('订单已生成!请使用微信付款~');
+                    if (res != 0) {
+                       location.href='{{:url("order/pay")}}?id=' + res;
                     } else {
                         mui.toast('系统繁忙请稍后查看订单');
+                        location.href='{{:url("index/index")}}';
                     }
+                },
+                error:function(res) {
+                  console.log(res);
                 }
             });
         });
@@ -230,30 +232,6 @@
         }
         console.log(this);
     });
-
-    function jsApiCall(jsApiParameters) {
-        WeixinJSBridge.invoke(
-            'getBrandWCPayRequest',
-            jsApiParameters,
-            function (res) {
-                WeixinJSBridge.log(res.err_msg);
-                alert(res.err_code + res.err_desc + res.err_msg);
-            }
-        );
-    }
-
-    function callpay(jsApiParameters) {
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-            }
-        } else {
-            jsApiCall(jsApiParameters);
-        }
-    }
 
     function resaddr(id){
         $('.by_popAddress_box').empty();

@@ -45,6 +45,7 @@ class JsapiPay extends WxPayBase {
      * @return array 预支付信息
      */
     public static function getParams($params, $openId = '') {
+//        echo '校验参数getParams';
         // 1.校检参数
         $that = new self();
         $that->checkParams($params);

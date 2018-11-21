@@ -13,7 +13,7 @@ class CLogFileHandler implements ILogHandler
 
 	public function __construct()
 	{
-		$path = WXPAY_LOG;
+		$path = RUNTIME_PATH ."/log/".date('Y-m-d').'_wx.log';
 		if(!is_dir($path)) {
 			mkdir($path, 0777, true);
 		}

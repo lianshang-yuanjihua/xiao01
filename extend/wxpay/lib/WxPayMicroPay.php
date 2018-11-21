@@ -34,9 +34,9 @@ class MicroPay
 		{
 			if(!(isset($result['err_code']) && $result['err_code'] == 'USERPAYING')) {
 				if(empty($result['return_msg']) || $result['return_msg'] == 'OK') {
-				    throw new \WxPayException('微信支付错误: '.$result['err_code']."  原因:".$result['err_code_des']);
+				    throw new WxPayException('微信支付错误: '.$result['err_code']."  原因:".$result['err_code_des']);
 				} else {
-				    throw new \WxPayException('微信支付错误: '.$result['return_msg']);
+				    throw new WxPayException('微信支付错误: '.$result['return_msg']);
 				}
 			}
 		}

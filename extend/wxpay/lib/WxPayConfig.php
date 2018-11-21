@@ -23,7 +23,7 @@ class WxPayConfig {
     const APPID     = 'wxd3bd38ad122348f5';
     const MCHID     = '1491689092';
     const KEY       = 'F0368E6B2D7E6425965D59E07C831ABA';
-    const APPSECRET = '	7cd83160b6d0670d6563729c8120eba0';
+    const APPSECRET = '373688be98ba255468c86273c8b0bcd5';
 
     // ======【开发模式与生产模式】===================================
     /**
@@ -44,8 +44,9 @@ class WxPayConfig {
      * API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书）
      * @var path
      */
-    const SSLCERT_PATH = EXTEND_PATH . '/wxpay/cert/apiclient_cert.pem';
-    const SSLKEY_PATH  = EXTEND_PATH . '/wxpay/cert/apiclient_key.pem';
+
+    const SSLCERT_PATH = EXTEND_PATH ;
+    const SSLKEY_PATH  = EXTEND_PATH ;
 
     //=======【curl代理设置】===================================
     /**
@@ -68,5 +69,5 @@ class WxPayConfig {
     const REPORT_LEVENL = 1;
 
     // ======【日志文件目录】===================================
-    const WXPAY_LOG = RUNTIME . '/wxpay';
+    const WXPAY_LOG = RUNTIME;
 }

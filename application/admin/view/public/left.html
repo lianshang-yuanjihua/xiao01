@@ -89,7 +89,13 @@
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>订单列表</cite>
                         </a>
-                    </li >
+                    </li>
+                    <li>
+                        <a _href="{{:url('order/untreatedOrder')}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>未发货订单</cite>
+                        </a>
+                    </li>
                 </ul>
             </li>
            {{if condition="$Think.session.adminInfo['usertype'] eq 9"}}

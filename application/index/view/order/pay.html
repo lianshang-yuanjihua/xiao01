@@ -1,0 +1,43 @@
+{{extend name="public/base"/}}
+{{block name="title"}}支付{{/block}}
+{{block name="main"}}
+<script>
+  $(function () {
+      callpay();
+  })
+    function jsApiCall() {
+        var data = {{$jsApiParameters}};
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            data,
+            function (res) {
+                WeixinJSBridge.log(res.err_msg);
+                if(res.err_msg == "get_brand_wcpay_request:ok"){
+                    alert("支付成功!");
+                    window.location.href="{{:url('user/order')}}";
+                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                    alert("用户取消支付!");
+                    window.location.href="{{:url('user/obligations')}}";
+                }else{
+                    alert("支付失败!");
+                    window.location.href="{{:url('user/obligations')}}";
+                }
+            }
+        );
+    }
+
+    function callpay() {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        } else {
+            jsApiCall();
+        }
+    }
+</script>
+<h1>微信支付1分</h1>
+{{/block}}

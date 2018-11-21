@@ -31,7 +31,7 @@ class Notify extends \WxPayNotify
             return false;
         }
 
-        // 2.微信服务器查询订单，判断订单真实性(可不需要)
+         //2.微信服务器查询订单，判断订单真实性(可不需要)
         if (!$this->Queryorder($data["transaction_id"])) {
             $msg = "订单查询失败";
             return false;
@@ -73,11 +73,11 @@ class Notify extends \WxPayNotify
     public function processOrder($order, $data)
     {
         //检查支付是否成功
-        if ($data['get_brand_wcpay_request'] == 'ok') {
+
             db('order')
                 ->where('id', $order['id'])
                 ->update(['status' => 1, 'transaction_id' => $data['transaction_id']]);
-
+            $this->sellLog($order);
             $user = session('userInfo');
             //查看该用户是否有上级
             $path = explode('--', trim($user->path, '--'));
@@ -102,9 +102,12 @@ class Notify extends \WxPayNotify
 
                         switch ($value->usertype) {
                             case 0://普通会员
+                                $befbalance = $value->balance;
                                 $value->balance += $value->agent_price * $num;
+                                $aftbalance = $value->balance;
                                 $value->total_income += $value->agent_price * $num;
                                 db('user')->where('id', $value->id)->update($value);
+                                $this->appLog($value->id,$aftbalance,$befbalance);
                                 break;
                             case 1://1级代理
                                 $sell = 0;
@@ -197,12 +200,11 @@ class Notify extends \WxPayNotify
                         }
                     }
                 }
+            } else{
+                $this->sellLog($order);
             }
-            return true;
-        } else {
-            return false;
-        }
 
+            return true;
     }
 
     /**
@@ -212,7 +214,7 @@ class Notify extends \WxPayNotify
      * @param $aftcloud 交易后云仓
      * @param $befcloud 交易前云仓
      */
-    public function appLog($id, $aftbalance, $befbalance, $aftcloud, $befcloud)
+    public function appLog($id, $aftbalance, $befbalance, $aftcloud='', $befcloud='')
     {
         $balog = [];
         $balog['uid'] = $id;
@@ -221,6 +223,7 @@ class Notify extends \WxPayNotify
         $balog['balance'] = $aftbalance;
         $balog['remarks'] = 'app交易';
         db('balancelog')->insert($balog);
+        if (!empty($aftcloud) && !empty($befcloud)){
         $yclog = [];
         $yclog['uid'] = $id;
         $yclog['time'] = time();
@@ -228,6 +231,36 @@ class Notify extends \WxPayNotify
         $yclog['cloud'] = $aftcloud;
         $yclog['remarks'] = 'app交易';
         db('yclog')->insert($yclog);
+        }
+    }
+
+    /** 产品销售日志
+     * @param $order 订单
+     */
+    public function sellLog($order){
+        $orderpro = db('orderproducts')->where('oid',$order['id'])->select();
+        $tmp = [];
+        foreach ($orderpro as $value){
+            $tmp['id'] = $value['proid'];
+            $tmp['num'] = $value['pronum'];
+        }
+        $products = db('product')->where('id','in',$tmp['id'])->select();
+        foreach ($products as $v){
+            $sellog = [];
+            for ($i=0;$i<count($tmp['id']);$i++){
+                if ($v['id'] == $tmp['id'][$i]){
+                    $sellog['proid'] = $v['id'];
+                    $sellog['uid'] = $v['id'];
+                    $sellog['time'] = time();
+                    $sellog['amount'] = $tmp['num'][$i];
+                    $sellog['product'] = $v['inventory'] - $tmp['num'][$i];
+                    $sellog['remarks'] = 'app平台销售';
+                    db('selllog')->insert($sellog);
+                    db('product')->where('id', $v['id'])->setDec('inventory',$tmp['num'][$i]);
+                }
+            }
+        }
+
     }
 
     // 去微信服务器查询是否有此订单
@@ -248,7 +281,6 @@ class Notify extends \WxPayNotify
     // 去本地服务器查询订单信息
     public function getOrder($data)
     {
-
         $order = db('order')->where('out_trade_no', $data['out_trade_no'])->find();
         return $order;
     }

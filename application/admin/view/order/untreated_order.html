@@ -7,7 +7,7 @@
 </div>
 <div class="x-body">
     <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" action="{{:url('order/search',['action'=>'order_list'])}}" method="get">
+        <form class="layui-form layui-col-md12 x-so" action="{{:url('order/search',['action'=>'untreated_order'])}}" method="get">
             <!--<input class="layui-input" placeholder="开始日" name="start" id="start">-->
             <!--<input class="layui-input" placeholder="截止日" name="end" id="end">-->
             订单查询 : <input type="text" name="keyword" value="{{$keyword?:''}}"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
@@ -55,7 +55,7 @@
         </tbody>
     </table>
     <div class="pagediv">
-    {{$listData['order']->render()}}
+        {{$listData['order']->render()}}
     </div>
 </div>
 {{/block}}
